@@ -1,0 +1,32 @@
+#' @title single-cell analysis of one sample
+#' @description A wrapper of the standard workflow of Seurat
+#' @param object Seurat object
+#' @param nFeatures Number of variable features to use
+#' @param nPC Number of principal components to use
+#' @param res Value of the resolution parameter
+#'
+#' @return Seurat object
+#'
+#' @author Wei Zhang
+#' @export
+
+scOne <- function(object=NULL, nFeatures=2000, nPC=30, res=0.5){
+  object <- Seurat::NormalizeData(object, normalization.method="LogNormalize", scale.factor=10000)
+  object <- Seurat::FindVariableFeatures(object, selection.method="vst", nfeatures=nFeatures)
+  object <- Seurat::ScaleData(object, features=rownames(object))
+  object <- Seurat::RunPCA(object, features=Seurat::VariableFeatures(object))
+  object <- Seurat::FindNeighbors(object, dims=1:nPC)
+  object <- Seurat::FindClusters(object, resolution=res)
+  object <- Seurat::RunUMAP(object, reduction = "pca", dims=1:nPC)
+  object <- Seurat::RunTSNE(object, reduction = "pca", dims = 1:nPC)
+  cols <- NA
+  if (length(levels(Seurat::Idents(object))) <= 36){
+    cols = c("#1660A7","#FF6A00","#219418","#CD0C18","#814BB2","#794339","#DC59B6","#CC79A7","#FF0000","#11B3C6",
+             "#AFB400","#00FFFF", "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#D55E00",
+             "#CC79A7", "#00AFBB", "#E69F00", "#009E73", "#56B4E9", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#4477AA",
+             "#EE6677", "#228833", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB")
+    object@misc$cols = cols
+  }
+  plot(Seurat::DimPlot(object = object, reduction = "umap", pt.size = 0.1, cols = cols))
+  return(object)
+}
