@@ -4,6 +4,12 @@ SCKIT is an R package designed for single-cell gene expression data importation,
 
 SCKIT can be used to read other information (such as gene mutation-by-cell matrix, pathogen count-by-cell matrix) and store them as additional data in the Seurat obj@metadata slot. In addition, SCKIT also has the function of reading and distinguishing the source of cells from the scRNA-seq data of xenografts samples.
 
+When there are many points in the vector diagram, editing becomes difficult. To this end, most visualization functions in SCKIT have the option to rasterize the geom_point layer of ggplot2 and keep all axes, labels, and text in vector format.
+
+
+
+
+
 
 
 
