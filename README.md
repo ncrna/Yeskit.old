@@ -26,7 +26,9 @@ If you have any problems, comments or suggestions, please contact [rstatistics@s
 
 ## How to cite
 
-Manual script has been submitted.
+Decoding Intracellular Pathogens of scRNA-seq experiments with PathogenTrack and SCKIT.
+
+The manuscript of the article has been submitted.
 
 
 
