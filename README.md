@@ -6,7 +6,13 @@ SCKIT can be used to read other information (such as gene mutation-by-cell matri
 
 When there are many points in the vector diagram, editing becomes difficult. To this end, most visualization functions in SCKIT have the option to rasterize the geom_point layer of ggplot2 and keep all axes, labels, and text in vector format.
 
+## Installation
 
+SCKIT package can be easily installed under the following instruction:
+
+```
+devtools::install_github("rstatistics/SCKIT")
+```
 
 
 
