@@ -22,7 +22,7 @@ Please check the following link to get a rapid understanding about SCKIT:
 
 ## Help
 
-If you have any problems, comments or suggestions, please feel free to contact [admin@ncrna.net](admin@ncrna.net).
+If you have any problems, comments or suggestions, please feel free to contact [admin@ncrna.net](mailto:admin@ncrna.net).
 
 ## How to cite
 
