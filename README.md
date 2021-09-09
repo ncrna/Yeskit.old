@@ -28,8 +28,6 @@ If you have any problems, comments or suggestions, please contact [rstatistics@s
 
 Decoding Intracellular Pathogens of scRNA-seq experiments with PathogenTrack and SCKIT.
 
-The manuscript of the article has been submitted.
-
 
 
 
