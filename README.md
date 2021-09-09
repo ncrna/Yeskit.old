@@ -22,7 +22,7 @@ Please check the following link to get a rapid understanding about SCKIT:
 
 ## Help
 
-If you have any problems, comments or suggestions, please contact [rstatistics@sjtu.edu.cn](rstatistics@sjtu.edu.cn) and [y12260@rjh.com.cn](y12260@rjh.com.cn).
+If you have any problems, comments or suggestions, please feel free to contact [admin@ncrna.net](admin@ncrna.net).
 
 ## How to cite
 
