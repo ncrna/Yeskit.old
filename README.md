@@ -26,7 +26,7 @@ If you have any problems, comments or suggestions, please contact [rstatistics@s
 
 ## How to cite
 
-<b Decoding Intracellular Pathogens of scRNA-seq experiments with PathogenTrack and SCKIT. /b>
+**Decoding Intracellular Pathogens of scRNA-seq experiments with PathogenTrack and SCKIT.**
 
 
 
