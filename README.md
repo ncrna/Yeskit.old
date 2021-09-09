@@ -14,6 +14,21 @@ SCKIT package can be easily installed under the following instruction:
 devtools::install_github("rstatistics/SCKIT")
 ```
 
+## Vignettes
+
+Please check the following link to get a rapid understanding about SCKIT:
+
+[Walkthrough - Exploring Intracellular Pathogens of H3N2 at Single-Cell level using PathogenTrack and SCKIT](https://htmlpreview.github.io/?https://github.com/rstatistics/SCKIT/blob/main/vignettes/SCKIT_example.html)
+
+## Help
+
+If you have any problems, comments or suggestions, please contact [rstatistics@sjtu.edu.cn](rstatistics@sjtu.edu.cn) and [y12260@rjh.com.cn](y12260@rjh.com.cn).
+
+## How to cite
+
+Manual script has been submitted.
+
+
 
 
 
