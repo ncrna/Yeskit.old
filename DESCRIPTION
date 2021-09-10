@@ -19,6 +19,7 @@ Depends:
     R (>= 3.6.0), topGO (>= 2.38.1)
 Imports:
     Seurat (>= 3.0.0),
+    MAST,
     ggplot2 (>= 3.3.0),
     cowplot (>= 1.0.0),
     RColorBrewer (>= 1.1.2),
