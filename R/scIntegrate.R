@@ -78,7 +78,8 @@ scIntegrate <- function(object.list=NULL, object.names=NULL, nVariable=2000, nPC
 #
 # @author Hadley Wickham
 # @references https://adv-r.hadley.nz/functions.html#missing-arguments
-#
+#' @export
+
 `%||%` <- function(lhs, rhs) {
   if (!is.null(lhs)) {
     lhs
