@@ -70,3 +70,19 @@ scIntegrate <- function(object.list=NULL, object.names=NULL, nVariable=2000, nPC
   }
   return(object)
 }
+
+# Set a default value if the left value is null
+#
+# @param lhs Default value to use
+# @param rhs The value to use if lhs is null
+#
+# @author Hadley Wickham
+# @references https://adv-r.hadley.nz/functions.html#missing-arguments
+#
+`%||%` <- function(lhs, rhs) {
+  if (!is.null(lhs)) {
+    lhs
+  } else {
+    rhs
+  }
+}
