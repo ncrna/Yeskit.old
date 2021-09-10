@@ -9,7 +9,6 @@
 #' @return Seurat object.
 #' @importFrom rlang %>%
 #' @importFrom rlang %||%
-#' @importFrom Seurat DefaultAssay
 
 #' @author rstatistics
 #' @export
@@ -37,7 +36,7 @@ scIntegrate <- function(object.list=NULL, object.names=NULL, nVariable=2000, nPC
   p1 <- Seurat::DimPlot(object = object, reduction = "pca", pt.size = .1, group.by = "sample")
   p2 <- Seurat::VlnPlot(object = object, features = "PC_1", pt.size = .1, group.by = "sample")
   plot(cowplot::plot_grid(p1,p2))
-  object <- harmony::RunHarmony(object = object, group.by.vars = "sample", plot_convergence = TRUE)
+  object <- harmony::RunHarmony(object = object, group.by.vars = "sample", assay.use = Seurat::DefaultAssay(object), plot_convergence = TRUE)
 
   if (batch.rm=="harmony"){
     object <- Seurat::FindNeighbors(object, reduction = "harmony", dims = 1:nPC)
