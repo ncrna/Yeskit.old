@@ -24,7 +24,6 @@
 #' @param res Resolution parameter to set. Default res=0.5
 #' @param batch.rm Remove batch effect with 'seurat' or 'harmony'. Default batch.rm="harmony"
 #' @return Seurat object.
-#' @importFrom rlang %>%
 
 #' @author rstatistics
 #' @export
