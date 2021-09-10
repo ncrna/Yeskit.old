@@ -16,7 +16,7 @@ RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 3.0.0)
 Depends:
-    R (>= 3.6.0)
+    R (>= 3.6.0), topGO (>= 2.38.1)
 Imports:
     Seurat (>= 3.0.0),
     ggplot2 (>= 3.3.0),
@@ -25,7 +25,6 @@ Imports:
     rlang (>= 0.4.10),
     dplyr (>= 0.8.5),
     harmony (>= 0.1.0),
-    topGO (>= 2.38.1),
     org.Hs.eg.db (>= 3.10.0),
     org.Mm.eg.db (>= 3.10.0),
     methods (>= 3.6.0),
