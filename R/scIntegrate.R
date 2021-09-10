@@ -7,7 +7,9 @@
 #' @param res Resolution parameter to set. Default res=0.5
 #' @param batch.rm Remove batch effect with 'seurat' or 'harmony'. Default batch.rm="harmony"
 #' @return Seurat object.
-#' @importFrom magrittr %>%
+#' @importFrom rlang %>%
+#' @importFrom rlang %||%
+#' @importFrom Seurat DefaultAssay
 
 #' @author rstatistics
 #' @export
@@ -35,8 +37,7 @@ scIntegrate <- function(object.list=NULL, object.names=NULL, nVariable=2000, nPC
   p1 <- Seurat::DimPlot(object = object, reduction = "pca", pt.size = .1, group.by = "sample")
   p2 <- Seurat::VlnPlot(object = object, features = "PC_1", pt.size = .1, group.by = "sample")
   plot(cowplot::plot_grid(p1,p2))
-  "%>%" <- NULL
-  object <- harmony::RunHarmony(object, "sample", plot_convergence = TRUE)
+  object <- harmony::RunHarmony(object = object, group.by.vars = "sample", plot_convergence = TRUE)
 
   if (batch.rm=="harmony"){
     object <- Seurat::FindNeighbors(object, reduction = "harmony", dims = 1:nPC)
