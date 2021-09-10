@@ -1,3 +1,20 @@
+# Set a default value if the left value is null
+#
+# @param lhs Default value to use
+# @param rhs The value to use if lhs is null
+#
+# @author Hadley Wickham
+# @references https://adv-r.hadley.nz/functions.html#missing-arguments
+#' @export
+
+`%||%` <- function(lhs, rhs) {
+  if (!is.null(lhs)) {
+    lhs
+  } else {
+    rhs
+  }
+}
+
 #' Integrate seurat objects into one
 #' @title scIntegrate
 #' @param object.list A list of seurat objects
@@ -8,7 +25,6 @@
 #' @param batch.rm Remove batch effect with 'seurat' or 'harmony'. Default batch.rm="harmony"
 #' @return Seurat object.
 #' @importFrom rlang %>%
-#' @importFrom rlang %||%
 
 #' @author rstatistics
 #' @export
