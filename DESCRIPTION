@@ -19,7 +19,7 @@ Depends:
     R (>= 3.6.0), topGO (>= 2.38.1)
 Imports:
     Seurat (>= 3.0.0),
-    MAST,
+    MAST (>= 1.18.0),
     ggplot2 (>= 3.3.0),
     cowplot (>= 1.0.0),
     RColorBrewer (>= 1.1.2),
@@ -36,6 +36,7 @@ Imports:
     scales (>= 1.1.0),
     gtable (>= 0.3.0),
     ggrastr (>= 0.2.3),
+    Cairo,
     RANN (>= 2.6.1)
 biocViews: Single-cell, Importation, Integration, Clustering, DifferentialAnalysis, GO, Annotation, Enrichment, 
     MSigDB, GeneSetScoring, Visualization, Pathogen
