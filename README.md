@@ -20,6 +20,15 @@ Please check the following link to get a rapid understanding about SCKIT:
 
 [Walkthrough - Exploring Intracellular Pathogens of H3N2 at Single-Cell level using PathogenTrack and SCKIT](https://htmlpreview.github.io/?https://github.com/rstatistics/SCKIT/blob/main/vignettes/SCKIT_example.html)
 
+## Troubleshooting
+
+In a particular case, the Cairo package can be loaded but crashes the R process when called. This is probably the case that the version of Cairo was built with an older version of R. Try the following instruction:
+```
+Bioconductor::install("Cairo", force = TRUE)
+```
+
+For OS X users, you may happen to an error like this: _Error : .onLoad failed in loadNamespace() for ‘Cairo’ ... Library not loaded: /opt/X11/lib/libXrender.1.dylib_. They reason is that X11 doesn't ship with OS X any more, users should download XQuartz from https://www.xquartz.org
+
 ## Help
 
 If you have any problems, comments or suggestions, please feel free to contact _**Wei Zhang**_, [admin@ncrna.net](mailto:admin@ncrna.net).
