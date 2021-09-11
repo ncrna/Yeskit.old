@@ -27,7 +27,13 @@ In a particular case, the Cairo package can be loaded but crashes the R process 
 Bioconductor::install("Cairo", force = TRUE)
 ```
 
-For OS X users, you may happen to an error like this: _Error : .onLoad failed in loadNamespace() for ‘Cairo’ ... Library not loaded: /opt/X11/lib/libXrender.1.dylib_. They reason is that X11 doesn't ship with OS X any more, users should download XQuartz from https://www.xquartz.org
+For OS X users, you may happen to an error like this:
+```
+_Error : .onLoad failed in loadNamespace() for ‘Cairo’
+... 
+Library not loaded: /opt/X11/lib/libXrender.1.dylib_
+```
+The reason is X11 doesn't ship with OS X any more, users can download XQuartz from https://www.xquartz.org and install it to fix this bug.
 
 ## Help
 
