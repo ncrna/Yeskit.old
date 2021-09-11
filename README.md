@@ -29,11 +29,11 @@ Bioconductor::install("Cairo", force = TRUE)
 
 For OS X users, you may happen to an error like this:
 ```
-_Error : .onLoad failed in loadNamespace() for ‘Cairo’
+Error : .onLoad failed in loadNamespace() for ‘Cairo’
 ... 
-Library not loaded: /opt/X11/lib/libXrender.1.dylib_
+Library not loaded: /opt/X11/lib/libXrender.1.dylib
 ```
-The reason is X11 doesn't ship with OS X any more, users can download XQuartz from https://www.xquartz.org and install it to fix this bug.
+The reason is X11 doesn't ship with OS X any more, users can download **XQuartz** from https://www.xquartz.org and install it to fix this bug.
 
 ## Help
 
