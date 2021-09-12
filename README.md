@@ -18,7 +18,7 @@ devtools::install_github("rstatistics/SCKIT")
 
 Please check the following link to get a rapid understanding about SCKIT:
 
-[Walkthrough - Exploring Intracellular Pathogens of H3N2 at Single-Cell level using PathogenTrack and SCKIT](https://htmlpreview.github.io/?https://github.com/rstatistics/SCKIT/blob/main/vignettes/SCKIT_example.html)
+[Walkthrough - Decoding Intracellular Pathogens of H3N2 at the Single-Cell level using SCKIT](https://htmlpreview.github.io/?https://github.com/rstatistics/SCKIT/blob/main/vignettes/Decoding_Intracellular_Pathogens_of_H3N2_at_the_Single-Cell_level_using_SCKIT.html)
 
 ## Troubleshooting
 
