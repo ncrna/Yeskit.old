@@ -11,7 +11,7 @@
 #' @author Wei Zhang
 #' @export
 
-scOne <- function(object=NULL, nFeatures=2000, nPC=30, resolution=0.5, ){
+scOne <- function(object=NULL, nFeatures=2000, nPC=30, resolution=0.5, perplexity=NULL){
   object <- Seurat::NormalizeData(object, normalization.method="LogNormalize", scale.factor=10000)
   object <- Seurat::FindVariableFeatures(object, selection.method="vst", nfeatures=nFeatures)
   object <- Seurat::ScaleData(object, features=rownames(object))
