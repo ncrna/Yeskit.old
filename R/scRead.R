@@ -5,7 +5,7 @@
 #' quantification matrix simultaneously
 #' @param sample_name Name of the sample
 #' @param data_dir Directory containing the quantification matrix
-#' (matrix.mtx, genes.tsv, and barcodes.tsv)
+#' (matrix.mtx, features.tsv, and barcodes.tsv)
 #' @param gene_column Column of genes.tsv to use for gene names,
 #' default is 2
 #' @param min_cells Minimum number of cells express this feature
@@ -98,8 +98,8 @@ scRead <- function(sample_name=NULL, data_dir=NULL, gene_column=2, min_cells=5, 
   }
   # QC and selecting cells for further analysis
   nFeature_RNA <- nCount_RNA <- percent.mito <- NULL
-  object <- subset(object, subset=nFeature_RNA > max(200, quantile(object$nFeature_RNA, 0.01)) & nFeature_RNA < quantile(object$nFeature_RNA, 0.99) &
-                   percent.mito < min(percent_mito, quantile(object$percent.mito, 0.99)) & nCount_RNA > max(1000, quantile(object$nCount_RNA, 0.01)) &
+  object <- subset(object, subset=nFeature_RNA > max(min_features, quantile(object$nFeature_RNA, 0.01)) & nFeature_RNA < quantile(object$nFeature_RNA, 0.99) &
+                   percent.mito <= min(percent_mito, quantile(object$percent.mito, 0.99)) & nCount_RNA > max(1000, quantile(object$nCount_RNA, 0.01)) &
                    nCount_RNA < quantile(object$nCount_RNA, 0.99))
   plot(Seurat::VlnPlot(object=object, features=c("nFeature_RNA","nCount_RNA","percent.mito"), ncol=3, pt.size=0.01))
   return(object)
