@@ -10,6 +10,7 @@
 #' default is 2
 #' @param min_cells Minimum number of cells express this feature
 #' @param min_features Minimum number of features expressed in this cell
+#' @param min_rnas Minimum number of molecules detected within a cell.
 #' @param percent_mito Maximum percent of mito in a cell
 #' @param mito_pattern regex pattern for mitochondrial genes, default is '^GRCh38_MT-|^mm10___mt-|^MT-|^mt-'
 #' @param project_name Project name for the Seurat object
@@ -28,7 +29,7 @@
 #' @author Wei Zhang
 #' @export
 
-scRead <- function(sample_name=NULL, data_dir=NULL, gene_column=2, min_cells=5, min_features=200, percent_mito=20,
+scRead <- function(sample_name=NULL, data_dir=NULL, gene_column=2, min_cells=5, min_features=200, min_rnas=1000, percent_mito=20,
                    mito_pattern='^GRCh38_MT-|^mm10___mt-|^MT-|^mt-', project_name="Seurat", group_name=NULL, strip_suffix=TRUE, meta_file=NULL,
                    human.prefix="GRCh38_", mouse.prefix="mm10___", organism.thres=0.9, organism.use=NULL, meta_features=NULL){
   object <- Seurat::Read10X(data.dir=data_dir, gene.column = gene_column, strip.suffix=strip_suffix)
@@ -99,7 +100,7 @@ scRead <- function(sample_name=NULL, data_dir=NULL, gene_column=2, min_cells=5, 
   # QC and selecting cells for further analysis
   nFeature_RNA <- nCount_RNA <- percent.mito <- NULL
   object <- subset(object, subset=nFeature_RNA > max(min_features, quantile(object$nFeature_RNA, 0.01)) & nFeature_RNA < quantile(object$nFeature_RNA, 0.99) &
-                   percent.mito <= min(percent_mito, quantile(object$percent.mito, 0.99)) & nCount_RNA > max(1000, quantile(object$nCount_RNA, 0.01)) &
+                   percent.mito <= min(percent_mito, quantile(object$percent.mito, 0.99)) & nCount_RNA > max(min_rnas, quantile(object$nCount_RNA, 0.01)) &
                    nCount_RNA < quantile(object$nCount_RNA, 0.99))
   plot(Seurat::VlnPlot(object=object, features=c("nFeature_RNA","nCount_RNA","percent.mito"), ncol=3, pt.size=0.01))
   return(object)
