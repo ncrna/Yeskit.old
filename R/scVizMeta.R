@@ -92,7 +92,8 @@ scVizMeta <- function(object=NULL, signature=NULL, pt.size=NULL, reduction=NULL,
     ymin <- min(Data[,2])
     ymax <- max(Data[,2])
     cols <- c(rev(RColorBrewer::brewer.pal(length(levels(Data$class))-1, palette))[1:length(levels(Data$class))-1], "gray")
-    names(cols) <- names(interval)
+    # names(cols) <- names(interval)
+    names(cols) <- names(interval)[(length(interval)-length(levels(Data$class))+1):length(interval)]
     return(ps(data = Data, cols = cols, title = title, legend_title = signature))
   }
   plots <- list()
