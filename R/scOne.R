@@ -3,22 +3,27 @@
 #' @param object Seurat object
 #' @param nFeatures Number of variable features to use
 #' @param nPC Number of principal components to use
-#' @param res Value of the resolution parameter
+#' @param resolution Value of the resolution parameter
+#' @param perplexity Value of the perplexity parameter, set between 5 and 50 
 #'
 #' @return Seurat object
 #'
 #' @author Wei Zhang
 #' @export
 
-scOne <- function(object=NULL, nFeatures=2000, nPC=30, res=0.5){
+scOne <- function(object=NULL, nFeatures=2000, nPC=30, resolution=0.5, ){
   object <- Seurat::NormalizeData(object, normalization.method="LogNormalize", scale.factor=10000)
   object <- Seurat::FindVariableFeatures(object, selection.method="vst", nfeatures=nFeatures)
   object <- Seurat::ScaleData(object, features=rownames(object))
   object <- Seurat::RunPCA(object, features=Seurat::VariableFeatures(object))
   object <- Seurat::FindNeighbors(object, dims=1:nPC)
-  object <- Seurat::FindClusters(object, resolution=res)
+  object <- Seurat::FindClusters(object, resolution=resolution)
   object <- Seurat::RunUMAP(object, reduction = "pca", dims=1:nPC)
-  object <- Seurat::RunTSNE(object, reduction = "pca", dims = 1:nPC)
+  if (is.null(perplexity)){
+    object <- Seurat::RunTSNE(object, reduction = "pca", dims = 1:nPC)
+  }else{
+    object <- Seurat::RunTSNE(object, reduction = "pca", dims = 1:nPC, perplexity = perplexity)
+  }
   cols <- NA
   if (length(levels(Seurat::Idents(object))) <= 36){
     cols = c("#1660A7","#FF6A00","#219418","#CD0C18","#814BB2","#794339","#DC59B6","#CC79A7","#FF0000","#11B3C6",
