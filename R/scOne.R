@@ -33,5 +33,11 @@ scOne <- function(object=NULL, nFeatures=2000, nPC=30, resolution=0.5, perplexit
     object@misc$cols = cols
   }
   plot(Seurat::DimPlot(object = object, reduction = "umap", pt.size = 0.1, cols = cols))
+  reductions <- intersect(c("pca", "tsne", "umap"), names(object))
+  for (reduction in reductions) {
+    meta_ids <- gsub("coord", toupper(reduction), c("coord_1", "coord_2"))
+    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, 1:2]
+    object <- Seurat::AddMetaData(object = object, metadata = coord, col.name = meta_ids)
+  }
   return(object)
 }
