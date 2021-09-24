@@ -9,23 +9,23 @@ Description: This is a single-cell analysis tookit. It can be used for single-ce
     of Seurat, and stores pathogen expression data and pathway enrichment scores in the obj@metadata slot and stores 
     differential gene analysis results and GO enrichment results in the obj@misc slot. Besides, Yeskit has the option to 
     rasterize the geom_point layer of ggplot2, while keep all axes, labels, and text in vector format.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Suggests: 
     testthat (>= 3.0.0)
 Depends:
-    R (>= 3.6.0), topGO (>= 2.38.1)
+    R (>= 3.6.0)
 Imports:
     Seurat (>= 3.0.0),
-    MAST (>= 1.18.0),
     ggplot2 (>= 3.3.0),
     cowplot (>= 1.0.0),
     RColorBrewer (>= 1.1.2),
     rlang (>= 0.4.10),
     dplyr (>= 0.8.5),
     harmony (>= 0.1.0),
+    topGO (>= 2.38.1),
     org.Hs.eg.db (>= 3.10.0),
     org.Mm.eg.db (>= 3.10.0),
     methods (>= 3.6.0),
@@ -36,7 +36,6 @@ Imports:
     scales (>= 1.1.0),
     gtable (>= 0.3.0),
     ggrastr (>= 0.2.3),
-    Cairo,
     RANN (>= 2.6.1)
 biocViews: Single-cell, Importation, Integration, Clustering, DifferentialAnalysis, GO, Annotation, Enrichment, 
     MSigDB, GeneSetScoring, Visualization, Pathogen
