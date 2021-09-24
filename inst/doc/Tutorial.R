@@ -1,0 +1,96 @@
+## ---- echo=FALSE--------------------------------------------------------------
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE, eval = TRUE,
+                      warnings = FALSE, message = FALSE,
+                      fig.width = 6, fig.height = 5)
+
+## ---- eval=FALSE--------------------------------------------------------------
+#  if (!requireNamespace("BiocManager", quietly = TRUE))
+#      install.packages("BiocManager")
+#  if (!requireNamespace("devtools", quietly = TRUE))
+#      BiocManager::install("devtools")
+#  if (!requireNamespace("Yeskit", quietly = TRUE))
+#      devtools::install_github("ncrna/Yeskit")
+
+## ---- warning=FALSE-----------------------------------------------------------
+library(Yeskit)
+library(topGO)
+
+## ----fig.width=4, fig.height=4------------------------------------------------
+Bystander <- scRead(sample_name = "Bystander", data_dir = system.file("extdata/H3N2_10X_matrix/Bystander/", package="Yeskit"), gene_column = 2, project_name = "H3N2", group_name = "Bystander", meta_file = system.file("extdata/H3N2_10X_matrix/Bystander/microbes.tsv", package="Yeskit"))
+Infected <- scRead(sample_name = "Infected", data_dir = system.file("extdata/H3N2_10X_matrix/Infected/", package="Yeskit"), gene_column = 2, project_name = "H3N2", group_name = "Infected", meta_file = system.file("extdata/H3N2_10X_matrix/Infected/microbes.tsv", package="Yeskit"))
+
+## -----------------------------------------------------------------------------
+H3N2_integrated <- scIntegrate(object.list=list(Bystander, Infected), object.names = c("Bystander", "Infected"), batch.rm = "harmony", res = 0.7)
+
+## -----------------------------------------------------------------------------
+H3N2_integrated@misc$Markers <- Seurat::FindAllMarkers(object = H3N2_integrated, assay = 'RNA', test.use = 'MAST')
+
+## -----------------------------------------------------------------------------
+H3N2_integrated@misc$Infected_vs_Bystander <- scDGE(object = H3N2_integrated, comparison = c("Infected", "Bystander"), group.by = "group", min.cells = 10, logFC = 0.25, clusters = NULL)
+
+## -----------------------------------------------------------------------------
+H3N2_integrated@misc$H3N2 <- scPathogenDGE(object = H3N2_integrated, species.by = "H3N2", min.cells = 5)
+
+## -----------------------------------------------------------------------------
+H3N2_integrated@misc$Markers.GO <- scGO(object = H3N2_integrated, key = "Markers", logFC = 0.25, only.pos = TRUE, reference = "human")
+
+## -----------------------------------------------------------------------------
+H3N2_integrated@misc$Infected_vs_Bystander.GO <- scGO(object = H3N2_integrated, key = "Infected_vs_Bystander", logFC = 0.25, only.pos = FALSE, reference = "human")
+
+## -----------------------------------------------------------------------------
+H3N2_integrated@misc$H3N2.GO <- scPathogenGO(object = H3N2_integrated, key = "H3N2", clusters = NULL, species = "H3N2", logFC = 0.25)
+
+## -----------------------------------------------------------------------------
+H3N2_integrated <- scMsigdbScoring(object = H3N2_integrated, category = "H", geneSets = NULL)
+
+## ---- fig.height=4, fig.width=8, fig.align="center"---------------------------
+scDimPlot(object = H3N2_integrated, reduction = "umap", cols = NULL, split.by = "sample", ncol = 2, pt.size = 2)
+
+## ---- fig.height=4, fig.width=8, fig.align="center"---------------------------
+scDensityPlot(object = H3N2_integrated, reduction = "umap", split.by = "sample", ncol = 2)
+
+## ---- fig.height=4, fig.width=5, fig.align="center"---------------------------
+scPopulationPlot(object = H3N2_integrated, by = "cluster", cols = "sc", order = c("Bystander", "Infected"))
+
+## ---- fig.height=4, fig.width=4, fig.align="center"---------------------------
+scPopulationPlot(object = H3N2_integrated, by = "sample", order = c("Bystander", "Infected"))
+
+## ---- fig.height=4, fig.width=4, fig.align="center"---------------------------
+scVizMeta(object = H3N2_integrated, reduction = "umap", signature="H3N2", title = "H3N2", raster = TRUE, split.by = "sample", pt.size = 2, interval = c(Abundant = 1000, Large = 500, Medium = 100, Small = 10, Single = 1, None = 0))
+
+## ---- fig.height=4, fig.width=4, fig.align="center"---------------------------
+scPathogenRatioPlot(object = H3N2_integrated, species = "H3N2", split.by = "sample", ncol = 2)
+
+## ---- fig.height=4, fig.width=4, fig.align="center"---------------------------
+scVolcanoPlot(H3N2_integrated, key = "Infected_vs_Bystander", cluster = "0", top_n = 10)
+
+## ---- fig.height=2, fig.width=3, fig.align="center"---------------------------
+scGOBarPlot(object = H3N2_integrated, key = "Infected_vs_Bystander.GO", ont = "BP", top_n = 10, direction = "up", cluster = "0")
+
+## ---- fig.height=2, fig.width=3, fig.align="center"---------------------------
+scGOBarPlot(object = H3N2_integrated, key = "Infected_vs_Bystander.GO", ont = "BP", top_n = 10, direction = "down", cluster = "0")
+
+## ---- fig.height=2, fig.width=3, fig.align="center"---------------------------
+scGODotPlot(object = H3N2_integrated, key = "Infected_vs_Bystander.GO", ont = "BP", direction = "up", top_n = 10, font.size = 10)
+
+## ---- fig.height=2, fig.width=3, fig.align="center"---------------------------
+scGODotPlot(object = H3N2_integrated, key = "Infected_vs_Bystander.GO", ont = "BP", direction = "down", top_n = 10, font.size = 10)
+
+## ---- fig.height=2, fig.width=3, fig.align="center"---------------------------
+scGODotPlot(object = H3N2_integrated, key = "Infected_vs_Bystander.GO", ont = "BP", direction = "up", top_n = 6, font.size = 10, order.genes = FALSE, clusters = "0")
+
+## ---- fig.height=2, fig.width=3, fig.align="center"---------------------------
+scGODotPlot(object = H3N2_integrated, key = "Infected_vs_Bystander.GO", ont = "BP", direction = "down", top_n = 10, font.size = 10, order.genes = FALSE, clusters = "0")
+
+## ---- fig.height=2, fig.width=5, fig.align="center"---------------------------
+scScoreDimPlot(H3N2_integrated, signature = "HALLMARK_INFLAMMATORY_RESPONSE", split.by="sample", ncol = 2, pt.size = 2)
+
+## ---- fig.height=2, fig.width=5, fig.align="center"---------------------------
+scScoreDimPlot(H3N2_integrated, signature = "HALLMARK_TNFA_SIGNALING_VIA_NFKB", split.by="sample", ncol = 2, pt.size = 2)
+
+## ---- fig.height=2, fig.width=5, fig.align="center"---------------------------
+scScoreDimPlot(H3N2_integrated, signature = "HALLMARK_APOPTOSIS", split.by="sample", ncol = 2, pt.size = 2)
+
+## ---- echo=FALSE--------------------------------------------------------------
+sessionInfo()
+
