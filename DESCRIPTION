@@ -19,6 +19,10 @@ Suggests:
 Depends:
     R (>= 3.6.0)
 Imports:
+    graphics,
+    utils,
+    stats,
+    grDevices
     Seurat (>= 3.0.0),
     ggplot2 (>= 3.3.0),
     cowplot (>= 1.0.0),
@@ -38,5 +42,5 @@ Imports:
     gtable (>= 0.3.0),
     ggrastr (>= 0.2.3),
     RANN (>= 2.6.1)
-biocViews: Single-cell, Importation, Integration, Clustering, DifferentialAnalysis, GO, Annotation, Enrichment, MSigDB, GeneSetScoring, Visualization, Pathogen
+biocViews: SingleCell, Clustering, GO, Annotation, Visualization
 VignetteBuilder: knitr
