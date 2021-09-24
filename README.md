@@ -1,4 +1,4 @@
-# SCKIT <img src="https://github.com/rstatistics/SCKIT/blob/main/inst/figures/SCKIT_logo.png" align="right" height=142 width=164/>
+# Yeskit *Yet another single-cell analysis toolkit*<img src="https://github.com/rstatistics/SCKIT/blob/main/inst/figures/SCKIT_logo.png" align="right" height=142 width=164/>
 
 SCKIT is an R package designed for single-cell gene expression data _importation_, _integration_, _clustering_, _differential analysis_, _functional analysis_, and _visualization_. Since SCKIT does not change the default data structure of Seurat, it can be easily integrated into most existing scRNA-seq workflows. 
 
