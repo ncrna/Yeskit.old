@@ -10,6 +10,7 @@ scRead(
   gene_column = 2,
   min_cells = 5,
   min_features = 200,
+  min_rnas = 1000,
   percent_mito = 20,
   mito_pattern = "^GRCh38_MT-|^mm10___mt-|^MT-|^mt-",
   project_name = "Seurat",
@@ -27,7 +28,7 @@ scRead(
 \item{sample_name}{Name of the sample}
 
 \item{data_dir}{Directory containing the quantification matrix
-(matrix.mtx, genes.tsv, and barcodes.tsv)}
+(matrix.mtx, features.tsv, and barcodes.tsv)}
 
 \item{gene_column}{Column of genes.tsv to use for gene names,
 default is 2}
@@ -35,6 +36,8 @@ default is 2}
 \item{min_cells}{Minimum number of cells express this feature}
 
 \item{min_features}{Minimum number of features expressed in this cell}
+
+\item{min_rnas}{Minimum number of molecules detected within a cell.}
 
 \item{percent_mito}{Maximum percent of mito in a cell}
 

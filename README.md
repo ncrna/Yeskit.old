@@ -1,4 +1,4 @@
-# Yeskit (*Yet another single-cell analysis toolkit*) <img src="https://github.com/rstatistics/SCKIT/blob/main/inst/figures/SCKIT_logo.png" align="right" height=142 width=164/>
+# Yeskit (*Yet another single-cell analysis toolkit*) <img src="https://github.com/ncrna/Yeskit/blob/main/inst/figures/Yeskit_logo.png" align="right" height=142 width=164/>
 
 `Yeskit` is an R package designed for single-cell gene expression data _importation_, _integration_, _clustering_, _differential analysis_, _functional analysis_, and _visualization_. Since `Yeskit` does not change the default data structure of `Seurat`, it can be easily integrated into most existing scRNA-seq analysis workflows. 
 
@@ -18,7 +18,7 @@ devtools::install_github("ncrna/Yeskit")
 
 Please check the following link to get a rapid understanding about `Yeskit`:
 
-[Walkthrough - Decoding Intracellular Pathogens of H3N2 at the Single-Cell level using Yeskit](https://htmlpreview.github.io/?https://github.com/ncrna/Yeskit/blob/main/vignettes/Decoding_Intracellular_Pathogens_of_H3N2_at_the_Single-Cell_level_using_SCKIT.html)
+[Walkthrough - Decoding Intracellular Pathogens of H3N2 at the Single-Cell level using Yeskit](https://htmlpreview.github.io/?https://github.com/ncrna/Yeskit/blob/main/vignettes/Decoding_Intracellular_Pathogens_of_H3N2_at_the_Single-Cell_level_using_Yeskit.html)
 
 ## Troubleshooting
 

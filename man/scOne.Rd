@@ -4,7 +4,13 @@
 \alias{scOne}
 \title{single-cell analysis of one sample}
 \usage{
-scOne(object = NULL, nFeatures = 2000, nPC = 30, res = 0.5)
+scOne(
+  object = NULL,
+  nFeatures = 2000,
+  nPC = 30,
+  resolution = 0.5,
+  perplexity = NULL
+)
 }
 \arguments{
 \item{object}{Seurat object}
@@ -13,7 +19,9 @@ scOne(object = NULL, nFeatures = 2000, nPC = 30, res = 0.5)
 
 \item{nPC}{Number of principal components to use}
 
-\item{res}{Value of the resolution parameter}
+\item{resolution}{Value of the resolution parameter}
+
+\item{perplexity}{Value of the perplexity parameter, set between 5 and 50}
 }
 \value{
 Seurat object

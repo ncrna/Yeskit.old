@@ -12,7 +12,7 @@ scMsigdbScoring <- function (object=NULL, category=NULL, geneSets=NULL){
   if (is.null(category)){
     category <- "H"
   }
-  MSigDB <- system.file("extdata", "MSIGDB.gmt", package="SCKIT")
+  MSigDB <- system.file("extdata", "MSIGDB.gmt", package="Yeskit")
   MSIGDB <- read.table(MSigDB, row.names = 1,
                        col.names = paste0("V", 1:max(count.fields(MSigDB, sep = "\t"))),
                        header = FALSE, sep = "\t", stringsAsFactors = FALSE, fill = TRUE)

@@ -14,7 +14,7 @@ scVizMeta(
   ncol = NULL,
   raster = TRUE,
   palette = "YlOrRd",
-  interval = c(Max = 100000, Hyper = 10000, Abundant = 1000, Large = 500, Medium = 100,
+  interval = c(Max = 1e+05, Hyper = 10000, Abundant = 1000, Large = 500, Medium = 100,
     Small = 10, Single = 1, None = 0)
 )
 }

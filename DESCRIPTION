@@ -1,13 +1,13 @@
-Package: SCKIT
+Package: Yeskit
 Type: Package
-Title: Single-Cell Analysis Toolkit (SCKIT)
+Title: Yet Another Single-Cell Analysis Toolkit (Yeskit)
 Version: 0.99.0
 Author: Wei Zhang
 Maintainer: Wei Zhang <admin@ncrna.net>
 Description: This is a single-cell analysis tookit. It can be used for single-cell gene expression matrices importation, 
     data integration, differential analysis, functional analysis, and visualization. It obeys the default data structure 
     of Seurat, and stores pathogen expression data and pathway enrichment scores in the obj@metadata slot and stores 
-    differential gene analysis results and GO enrichment results in the obj@misc slot. Besides, SCKIT has the option to 
+    differential gene analysis results and GO enrichment results in the obj@misc slot. Besides, Yeskit has the option to 
     rasterize the geom_point layer of ggplot2, while keep all axes, labels, and text in vector format.
 License: GPL-3
 Encoding: UTF-8
