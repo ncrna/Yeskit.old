@@ -11,33 +11,38 @@
 #' @author Wei Zhang
 #' @export
 
-scOne <- function(object=NULL, nFeatures=2000, nPC=30, resolution=0.5, perplexity=NULL){
-  object <- Seurat::NormalizeData(object, normalization.method="LogNormalize", scale.factor=10000)
-  object <- Seurat::FindVariableFeatures(object, selection.method="vst", nfeatures=nFeatures)
-  object <- Seurat::ScaleData(object, features=rownames(object))
-  object <- Seurat::RunPCA(object, features=Seurat::VariableFeatures(object))
-  object <- Seurat::FindNeighbors(object, dims=seq_len(nPC))
-  object <- Seurat::FindClusters(object, resolution=resolution)
-  object <- Seurat::RunUMAP(object, reduction = "pca", dims=seq_len(nPC))
-  if (is.null(perplexity)){
-    object <- Seurat::RunTSNE(object, reduction = "pca", dims = seq_len(nPC))
-  }else{
-    object <- Seurat::RunTSNE(object, reduction = "pca", dims = seq_len(nPC), perplexity = perplexity)
-  }
-  cols <- NA
-  if (length(levels(Seurat::Idents(object))) <= 36){
-    cols = c("#1660A7","#FF6A00","#219418","#CD0C18","#814BB2","#794339","#DC59B6","#CC79A7","#FF0000","#11B3C6",
-             "#AFB400","#00FFFF", "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#D55E00",
-             "#CC79A7", "#00AFBB", "#E69F00", "#009E73", "#56B4E9", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#4477AA",
-             "#EE6677", "#228833", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB")
-    object@misc$cols = cols
-  }
-  plot(Seurat::DimPlot(object = object, reduction = "umap", pt.size = 0.1, cols = cols))
-  reductions <- intersect(c("pca", "tsne", "umap"), names(object))
-  for (reduction in reductions) {
-    meta_ids <- gsub("coord", toupper(reduction), c("coord_1", "coord_2"))
-    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, c(1,2)]
-    object <- Seurat::AddMetaData(object = object, metadata = coord, col.name = meta_ids)
-  }
-  return(object)
+scOne <- function(object = NULL, nFeatures = 2000, nPC = 30, resolution = 0.5, perplexity = NULL) {
+    object <- Seurat::NormalizeData(object, normalization.method = "LogNormalize",
+        scale.factor = 10000)
+    object <- Seurat::FindVariableFeatures(object, selection.method = "vst", nfeatures = nFeatures)
+    object <- Seurat::ScaleData(object, features = rownames(object))
+    object <- Seurat::RunPCA(object, features = Seurat::VariableFeatures(object))
+    object <- Seurat::FindNeighbors(object, dims = seq_len(nPC))
+    object <- Seurat::FindClusters(object, resolution = resolution)
+    object <- Seurat::RunUMAP(object, reduction = "pca", dims = seq_len(nPC))
+    if (is.null(perplexity)) {
+        object <- Seurat::RunTSNE(object, reduction = "pca", dims = seq_len(nPC))
+    } else {
+        object <- Seurat::RunTSNE(object, reduction = "pca", dims = seq_len(nPC),
+            perplexity = perplexity)
+    }
+    cols <- NA
+    if (length(levels(Seurat::Idents(object))) <= 36) {
+        cols = c("#1660A7", "#FF6A00", "#219418", "#CD0C18", "#814BB2", "#794339",
+            "#DC59B6", "#CC79A7", "#FF0000", "#11B3C6", "#AFB400", "#00FFFF", "#999999",
+            "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#D55E00",
+            "#CC79A7", "#00AFBB", "#E69F00", "#009E73", "#56B4E9", "#F0E442", "#0072B2",
+            "#D55E00", "#CC79A7", "#4477AA", "#EE6677", "#228833", "#CCBB44", "#66CCEE",
+            "#AA3377", "#BBBBBB")
+        object@misc$cols = cols
+    }
+    plot(Seurat::DimPlot(object = object, reduction = "umap", pt.size = 0.1, cols = cols))
+    reductions <- intersect(c("pca", "tsne", "umap"), names(object))
+    for (reduction in reductions) {
+        meta_ids <- gsub("coord", toupper(reduction), c("coord_1", "coord_2"))
+        coord <- Seurat::Embeddings(object = object, reduction = reduction)[, c(1,
+            2)]
+        object <- Seurat::AddMetaData(object = object, metadata = coord, col.name = meta_ids)
+    }
+    return(object)
 }
