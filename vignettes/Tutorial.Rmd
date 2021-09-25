@@ -59,34 +59,34 @@ H3N2_integrated <- scIntegrate(object.list=list(Bystander, Infected), object.nam
 
 # FindMarkers
 ```{r}
-H3N2_integrated@misc$Markers <- Seurat::FindAllMarkers(object = H3N2_integrated, assay = 'RNA', test.use = 'MAST')
+slot(H3N2_integrated, "misc")$Markers <- Seurat::FindAllMarkers(object = H3N2_integrated, assay = 'RNA', test.use = 'MAST')
 ```
 
 # Differential analysis
 ## Differential analysis between Infected and Bystander
 ```{r}
-H3N2_integrated@misc$Infected_vs_Bystander <- scDGE(object = H3N2_integrated, comparison = c("Infected", "Bystander"), group.by = "group", min.cells = 10, logFC = 0.25, clusters = NULL)
+slot(H3N2_integrated, "misc")$Infected_vs_Bystander <- scDGE(object = H3N2_integrated, comparison = c("Infected", "Bystander"), group.by = "group", min.cells = 10, logFC = 0.25, clusters = NULL)
 ```
 
 ## Differential analysis between H3N2_positive and H3N2_negative 
 ```{r}
-H3N2_integrated@misc$H3N2 <- scPathogenDGE(object = H3N2_integrated, species.by = "H3N2", min.cells = 5)
+slot(H3N2_integrated, "misc")$H3N2 <- scPathogenDGE(object = H3N2_integrated, species.by = "H3N2", min.cells = 5)
 ```
 
 # GO annotation
 ## GO annotation of Markers
 ```{r}
-H3N2_integrated@misc$Markers.GO <- scGO(object = H3N2_integrated, key = "Markers", logFC = 0.25, only.pos = TRUE, reference = "human")
+slot(H3N2_integrated, "misc")$Markers.GO <- scGO(object = H3N2_integrated, key = "Markers", logFC = 0.25, only.pos = TRUE, reference = "human")
 ```
 
 ## GO annotation of DGEs between Infected and Bystander
 ```{r}
-H3N2_integrated@misc$Infected_vs_Bystander.GO <- scGO(object = H3N2_integrated, key = "Infected_vs_Bystander", logFC = 0.25, only.pos = FALSE, reference = "human")
+slot(H3N2_integrated, "misc")$Infected_vs_Bystander.GO <- scGO(object = H3N2_integrated, key = "Infected_vs_Bystander", logFC = 0.25, only.pos = FALSE, reference = "human")
 ```
 
 ## GO annotation of DGEs between H3N2_positive and H3N2_negative 
 ```{r}
-H3N2_integrated@misc$H3N2.GO <- scPathogenGO(object = H3N2_integrated, key = "H3N2", clusters = NULL, species = "H3N2", logFC = 0.25)
+slot(H3N2_integrated, "misc")$H3N2.GO <- scPathogenGO(object = H3N2_integrated, key = "H3N2", clusters = NULL, species = "H3N2", logFC = 0.25)
 ```
 
 # MSigDB scoring

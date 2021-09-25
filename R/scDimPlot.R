@@ -140,7 +140,7 @@ scDimPlot <- function(object = NULL, cols = NULL, pt.size = NULL, reduction = NU
         }
         legend <- ps(data = Data, title = NULL, legend_title = NULL)
         legend <- ggplot2::ggplotGrob(legend)
-        legend <- gtable::gtable_filter(legend, "box", trim = F)  # use trim depending on need
+        legend <- gtable::gtable_filter(legend, "box", trim = FALSE)  # use trim depending on need
         for (s in unique(Data[, split.by])) {
             data <- Data[Data[, split.by] == s, ]
             nearest.point <- RANN::nn2(data = data[, c(1, 2)], query = GetXYCenter(data)[,
