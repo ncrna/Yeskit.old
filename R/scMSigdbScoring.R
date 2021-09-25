@@ -14,10 +14,10 @@ scMsigdbScoring <- function (object=NULL, category=NULL, geneSets=NULL){
   }
   MSigDB <- system.file("extdata", "MSIGDB.gmt", package="Yeskit")
   MSIGDB <- read.table(MSigDB, row.names = 1,
-                       col.names = paste0("V", 1:max(count.fields(MSigDB, sep = "\t"))),
+                       col.names = paste0("V", seq_len(max(count.fields(MSigDB, sep = "\t")))),
                        header = FALSE, sep = "\t", stringsAsFactors = FALSE, fill = TRUE)
   if (! category %in% c("H", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8")){
-    stop(paste0("category must be one of these choices: ", '"H", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"'))
+    stop("category must be one of these choices: ", '"H", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"')
   }
   MSIGDB <- MSIGDB[MSIGDB[,1]==category, ]
   MSIGDB[ ,1] <- NULL
@@ -30,7 +30,7 @@ scMsigdbScoring <- function (object=NULL, category=NULL, geneSets=NULL){
   }else{
     geneSets <- intersect(geneSets, names(MSIGDB))
     if (length(geneSets)==0){
-      stop(paste0("geneSets ", geneSets, "does not exist in ", MSigDB, "!"))
+      stop("geneSets ", geneSets, "does not exist in ", MSigDB, "!")
     }
   }
   for (item in geneSets){
@@ -53,7 +53,7 @@ scMsigdbScoring <- function (object=NULL, category=NULL, geneSets=NULL){
   reductions <- intersect(c("pca", "tsne", "umap"), names(object))
   for (reduction in reductions){
     meta_ids <- gsub("coord", toupper(reduction), c("coord_1", "coord_2"))
-    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, 1:2]
+    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, c(1,2)]
     object <- Seurat::AddMetaData(object = object, metadata = coord, col.name = meta_ids)
   }
   return(object)

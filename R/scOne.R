@@ -16,13 +16,13 @@ scOne <- function(object=NULL, nFeatures=2000, nPC=30, resolution=0.5, perplexit
   object <- Seurat::FindVariableFeatures(object, selection.method="vst", nfeatures=nFeatures)
   object <- Seurat::ScaleData(object, features=rownames(object))
   object <- Seurat::RunPCA(object, features=Seurat::VariableFeatures(object))
-  object <- Seurat::FindNeighbors(object, dims=1:nPC)
+  object <- Seurat::FindNeighbors(object, dims=seq_len(nPC))
   object <- Seurat::FindClusters(object, resolution=resolution)
-  object <- Seurat::RunUMAP(object, reduction = "pca", dims=1:nPC)
+  object <- Seurat::RunUMAP(object, reduction = "pca", dims=seq_len(nPC))
   if (is.null(perplexity)){
-    object <- Seurat::RunTSNE(object, reduction = "pca", dims = 1:nPC)
+    object <- Seurat::RunTSNE(object, reduction = "pca", dims = seq_len(nPC))
   }else{
-    object <- Seurat::RunTSNE(object, reduction = "pca", dims = 1:nPC, perplexity = perplexity)
+    object <- Seurat::RunTSNE(object, reduction = "pca", dims = seq_len(nPC), perplexity = perplexity)
   }
   cols <- NA
   if (length(levels(Seurat::Idents(object))) <= 36){
@@ -36,7 +36,7 @@ scOne <- function(object=NULL, nFeatures=2000, nPC=30, resolution=0.5, perplexit
   reductions <- intersect(c("pca", "tsne", "umap"), names(object))
   for (reduction in reductions) {
     meta_ids <- gsub("coord", toupper(reduction), c("coord_1", "coord_2"))
-    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, 1:2]
+    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, c(1,2)]
     object <- Seurat::AddMetaData(object = object, metadata = coord, col.name = meta_ids)
   }
   return(object)

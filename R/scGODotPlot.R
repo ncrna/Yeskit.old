@@ -24,11 +24,11 @@ scGODotPlot <- function(object = NULL, key = NULL, clusters = NULL, direction = 
     stop("Parameter 'key' must be specified!\n")
   }
   if (! key %in% names(object@misc)){
-    stop(paste0("The 'key' ", key, " does not exist!\n"))
+    stop("The 'key' ", key, " does not exist!\n")
   }
   direction <- intersect(direction, c("up","down"))
   if (length(direction)==0){
-    warning(paste0("Only up-regulated GO terms are used for analysis!"))
+    warning("Only up-regulated GO terms are used for analysis!")
     direction <- "up"
   }
   if (is.null(colors)){
@@ -66,9 +66,9 @@ scGODotPlot <- function(object = NULL, key = NULL, clusters = NULL, direction = 
       GO.tmp <- GO.tmp[order(as.numeric(GO.tmp$Significant), decreasing = TRUE), ]
       GO.tmp <- GO.tmp[as.numeric(gsub("< ", "", GO.tmp$Fisher.elim)) <= padj.cutoff, ]
     }
-    term <- GO.tmp$Term[1:top_n]
+    term <- GO.tmp$Term[seq_len(top_n)]
     term <- term[!is.na(term)]
-    id <- GO.tmp$GO.ID[1:top_n]
+    id <- GO.tmp$GO.ID[seq_len(top_n)]
     id <- id[!is.na(id)]
     term <- paste(id, term, sep = ": ")
     GO.terms <- unique(c(GO.terms, term))

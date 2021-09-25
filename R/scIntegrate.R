@@ -54,15 +54,15 @@ scIntegrate <- function(object.list=NULL, object.names=NULL, nVariable=2000, nPC
   object <- harmony::RunHarmony(object = object, group.by.vars = "sample", assay.use = Seurat::DefaultAssay(object), plot_convergence = TRUE)
 
   if (batch.rm=="harmony"){
-    object <- Seurat::FindNeighbors(object, reduction = "harmony", dims = 1:nPC)
+    object <- Seurat::FindNeighbors(object, reduction = "harmony", dims = seq_len(nPC))
     object <- Seurat::FindClusters(object, resolution = res)
-    object <- Seurat::RunUMAP(object, reduction = "harmony", dims = 1:nPC)
-    object <- Seurat::RunTSNE(object, reduction = "harmony", dims = 1:nPC, do.fast=TRUE)
+    object <- Seurat::RunUMAP(object, reduction = "harmony", dims = seq_len(nPC))
+    object <- Seurat::RunTSNE(object, reduction = "harmony", dims = seq_len(nPC), do.fast=TRUE)
   }else if (batch.rm=="seurat"){
-    object <- Seurat::FindNeighbors(object, reduction = "pca", dims = 1:nPC)
+    object <- Seurat::FindNeighbors(object, reduction = "pca", dims = seq_len(nPC))
     object <- Seurat::FindClusters(object, resolution = res)
-    object <- Seurat::RunUMAP(object, reduction = "pca", dims = 1:nPC)
-    object <- Seurat::RunTSNE(object, reduction = "pca", dims = 1:nPC)
+    object <- Seurat::RunUMAP(object, reduction = "pca", dims = seq_len(nPC))
+    object <- Seurat::RunTSNE(object, reduction = "pca", dims = seq_len(nPC))
   }else{
     stop("batch.rm must be 'harmony' or 'seurat'!")
   }
@@ -80,7 +80,7 @@ scIntegrate <- function(object.list=NULL, object.names=NULL, nVariable=2000, nPC
   reductions <- intersect(c("pca", "tsne", "umap"), names(object))
   for (reduction in reductions){
     meta_ids <- gsub("coord", toupper(reduction), c("coord_1", "coord_2"))
-    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, 1:2]
+    coord <- Seurat::Embeddings(object = object, reduction = reduction)[, c(1,2)]
     object <- Seurat::AddMetaData(object = object, metadata = coord, col.name = meta_ids)
   }
   return(object)

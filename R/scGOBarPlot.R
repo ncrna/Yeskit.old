@@ -26,7 +26,7 @@ scGOBarPlot <- function(object=NULL, key=NULL, cluster=NULL, direction="up", ont
   }
   cluster = as.character(cluster)
   if (! key %in% names(object@misc)){
-    stop(paste0("The 'key' ", key, " does not exist!\n"))
+    stop("The 'key' ", key, " does not exist!\n")
   }
   if (is.null(extra)){
     GOdata = object@misc[[key]]
@@ -40,11 +40,11 @@ scGOBarPlot <- function(object=NULL, key=NULL, cluster=NULL, direction="up", ont
     ont = "BP"
   }
   if (! ont %in% c("BP", "CC", "MF")){
-    stop(paste0("ont must be 'BP', 'CC' or 'MF'."))
+    stop("ont must be 'BP', 'CC' or 'MF'.")
   }
   direction <- intersect(direction, c("up","down"))
   if (length(direction)==0){
-    warning(paste0("Only up-regulated GO terms are used for analysis!"))
+    warning("Only up-regulated GO terms are used for analysis!")
     direction <- "up"
   }
   colour <- "red"
@@ -55,7 +55,7 @@ scGOBarPlot <- function(object=NULL, key=NULL, cluster=NULL, direction="up", ont
   z <- z[!duplicated(z$GO.ID), ]
   z$Term <- paste(z$GO.ID, z$Term, sep = ": ")
   if (is.null(z)){ stop("No data available!\n") }
-  z <- z[1:top_n, ]
+  z <- z[seq_len(top_n), ]
   z <- data.frame(Term=z$Term, FDR=as.numeric(gsub("< ", "", z$Fisher.elim)))
   p <- ggplot2::ggplot(z, ggplot2::aes(x=reorder(Term,-log10(FDR)),y=-log10(FDR))) +
     ggplot2::geom_bar(stat="identity", fill=colour, color="NA",width = 0.8) +

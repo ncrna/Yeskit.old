@@ -17,7 +17,7 @@ scPathogenDGE <- function(object = NULL, species.by = NULL, clusters = NULL, min
   }
   clusters = as.character(clusters)
   if (! species.by %in% names(object@meta.data)){
-    stop(paste0("The feature ", species.by, " does not exist in MetaData slot!\n"))
+    stop("The feature ", species.by, " does not exist in MetaData slot!\n")
   }
   results <- list()
   seurat_clusters <- p_val_adj <- NULL

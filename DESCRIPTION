@@ -39,7 +39,7 @@ Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown
-biocViews: SingleCell, Clustering, GO, Annotation, Visualization
+biocViews: SingleCell, Clustering, GeneExpression, DifferentialExpression, GO, Annotation, Visualization
 VignetteBuilder: knitr
 License: MIT + file LICENSE
 Encoding: UTF-8

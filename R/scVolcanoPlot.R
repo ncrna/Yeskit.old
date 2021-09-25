@@ -31,7 +31,7 @@ scVolcanoPlot <- function(object = NULL, key = NULL, cluster = NULL, padj=0.05, 
   }
   cluster = as.character(cluster)
   if (! key %in% names(object@misc)){
-    stop(paste0("The 'key' ", key, " does not exist!\n"))
+    stop("The 'key' ", key, " does not exist!\n")
   }
   if (is.null(top_n)){
     top_n <- 5
@@ -57,7 +57,7 @@ scVolcanoPlot <- function(object = NULL, key = NULL, cluster = NULL, padj=0.05, 
   }
   cluster <- as.character(cluster)
   if (! cluster %in% unique(Data$cluster)){
-    stop(paste0("cluster ", cluster, " does not exist"))
+    stop("cluster ", cluster, " does not exist")
   }
   Data <- Data[Data$cluster==cluster, ]
   xrange <- range(Data$avg_log2FC)
@@ -72,7 +72,7 @@ scVolcanoPlot <- function(object = NULL, key = NULL, cluster = NULL, padj=0.05, 
   ymax <- ceiling(max(yrange)) * 1.1
   Data$group = "no"
   if (! any(Data$p_val_adj < padj & Data$avg_log2FC > logFC) & any(Data$p_val_adj < padj & Data$avg_log2FC < -logFC)){
-    stop(paste0("No up- or down-regulated genes exist in cluster-", cluster))
+    stop("No up- or down-regulated genes exist in cluster-", cluster)
   }
   Data[Data$p_val_adj < padj & Data$avg_log2FC > logFC, ]$group <- "up"
   Data[Data$p_val_adj < padj & Data$avg_log2FC < -logFC, ]$group <- "down"

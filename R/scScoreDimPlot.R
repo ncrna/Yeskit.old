@@ -27,7 +27,7 @@ scScoreDimPlot <- function(object=NULL, signature=NULL, reduction=NULL, cols=NUL
     }else if ("tsne" %in% names(object)){
       reduction <- "tsne"
     }else{
-      stop(paste0("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n"))
+      stop("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n")
     }
   }
   if (is.null(cols)){
@@ -94,7 +94,7 @@ scScoreDimPlot <- function(object=NULL, signature=NULL, reduction=NULL, cols=NUL
   plots <- list()
   if (! is.null(x = split.by)){
     if (! split.by %in% colnames(object@meta.data)){
-      stop(paste0("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n"))
+      stop("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n")
     }
     Data <- object@meta.data[, c(reduction_ids, signature, split.by)]
     if (scale) {

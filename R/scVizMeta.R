@@ -28,7 +28,7 @@ scVizMeta <- function(object=NULL, signature=NULL, pt.size=NULL, reduction=NULL,
     stop("Parameter 'signature' must be one pathway!\n")
   }
   if (! signature %in% names(object@meta.data)){
-    stop(paste0("The signature parameter does not exist in MetaData slot!\n"))
+    stop("The signature parameter does not exist in MetaData slot!\n")
   }
   if (is.null(pt.size)){
     pt.size <- 0.5
@@ -41,7 +41,7 @@ scVizMeta <- function(object=NULL, signature=NULL, pt.size=NULL, reduction=NULL,
     }else if ("pca" %in% names(object)){
       reduction <- "pca"
     }else{
-      stop(paste0("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n"))
+      stop("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n")
     }
   }
   for (x in seq_along(interval)){
@@ -81,7 +81,7 @@ scVizMeta <- function(object=NULL, signature=NULL, pt.size=NULL, reduction=NULL,
     Data <- object@meta.data[, c(reduction_ids, signature)]
     Data[, signature][is.na(Data[, signature])] <- 0
     Data[, "class"] <- NA
-    for (i in 1:(length(interval)-1)){
+    for (i in seq_len(length(interval)-1)){
       Data$class <- ifelse(Data[, signature] > interval[i+1] & Data[, signature] <= interval[i], names(interval[i]), Data$class)
     }
     Data$class[is.na(Data$class)] <- names(interval)[length(interval)]
@@ -99,12 +99,12 @@ scVizMeta <- function(object=NULL, signature=NULL, pt.size=NULL, reduction=NULL,
   plots <- list()
   if (! is.null(x = split.by)){
     if (! split.by %in% colnames(object@meta.data)){
-      stop(paste0("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n"))
+      stop("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n")
     }
     Data <- object@meta.data[, c(reduction_ids, signature, split.by)]
     Data[, signature][is.na(Data[, signature])] <- 0
     Data[, "class"] <- NA
-    for (i in 1:(length(interval)-1)){
+    for (i in seq_len(length(interval)-1)){
       Data$class <- ifelse(Data[, signature] > interval[i+1] & Data[, signature] <= interval[i], names(interval[i]), Data$class)
     }
     Data$class[is.na(Data$class)] <- names(interval)[length(interval)]

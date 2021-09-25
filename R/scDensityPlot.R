@@ -25,7 +25,7 @@ scDensityPlot <- function(object=NULL, reduction=NULL, title=NULL, split.by=NULL
       }else if ("pca" %in% names(object)){
         reduction <- "pca"
       }else{
-        stop(paste0("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n"))
+        stop("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n")
       }
     }
     if (is.null(title)){
@@ -59,7 +59,7 @@ scDensityPlot <- function(object=NULL, reduction=NULL, title=NULL, split.by=NULL
       p <- p + ggplot2::theme(legend.position = "none")
       return(p)
     }
-    Data <- Seurat::Embeddings(object = object[[reduction]])[, 1:2]
+    Data <- Seurat::Embeddings(object = object[[reduction]])[, c(1,2)]
     Data <- as.data.frame(Data)
     m <- MASS::kde2d(x = Data[,1], y = Data[,2], h = c(MASS::bandwidth.nrd(Data[,1]), MASS::bandwidth.nrd(Data[,2])), n = 100, lims = c(range(Data[,1]), range(Data[,2])))
     z.min <- min(m$z)

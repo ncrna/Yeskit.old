@@ -51,7 +51,7 @@ scPathogenRatioPlot <- function(object=NULL, species=NULL, cols=NULL, split.by=N
   plots <- list()
   if (! is.null(x = split.by)){
     if (! split.by %in% colnames(object@meta.data)){
-      stop(paste0("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n"))
+      stop("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n")
     }
     Data <- object@meta.data[, c(species, "seurat_clusters", split.by)]
     if(is.null(ncol)){

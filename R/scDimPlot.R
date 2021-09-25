@@ -22,11 +22,11 @@ scDimPlot <- function(object=NULL, cols=NULL, pt.size=NULL, reduction=NULL, spli
                 "#CC79A7", "#00AFBB", "#E69F00", "#009E73", "#56B4E9", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#4477AA",
                 "#EE6677", "#228833", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB")
     }else{
-      warning(paste0("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters! Use ggplot2's default colors instead\n"))
+      warning("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters! Use ggplot2's default colors instead\n")
       cols <- scales::hue_pal()(length(levels(Seurat::Idents(object))))
     }
   }else if (length(levels(Seurat::Idents(object))) > length(cols)){
-      stop(paste0("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters!"))
+      stop("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters!")
   }
   if (is.null(pt.size)){
     pt.size <- 0.5
@@ -39,7 +39,7 @@ scDimPlot <- function(object=NULL, cols=NULL, pt.size=NULL, reduction=NULL, spli
     }else if ("pca" %in% names(object)){
       reduction <- "pca"
     }else{
-      stop(paste0("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n"))
+      stop("The reduction parameter does not support! Please use 'umap', 'tsne', or 'pca' instead.\n")
     }
   }
   xmin <- xmax <- ymin <- ymax <- NULL
@@ -92,15 +92,15 @@ scDimPlot <- function(object=NULL, cols=NULL, pt.size=NULL, reduction=NULL, spli
     return(result)
   }
   reduction_ids <- gsub("coord", toupper(reduction), c("coord_1", "coord_2"))
-  coord <- Seurat::Embeddings(object = object, reduction = reduction)[, 1:2]
+  coord <- Seurat::Embeddings(object = object, reduction = reduction)[, c(1,2)]
   object <- Seurat::AddMetaData(object = object, metadata = coord, col.name = reduction_ids)
   object <- Seurat::AddMetaData(object = object, metadata = as.vector(Seurat::Idents(object)), col.name = "cluster")
   if (is.null(x = split.by)){
     Data <- object@meta.data[, c(reduction_ids, "cluster")]
     Data[, "cluster"] <- factor(Data[, "cluster"], levels=levels(Seurat::Idents(object)))
     Data[, "color"] <- Data[, "cluster"]
-    levels(Data[, "color"]) <- cols[1:length(levels(Seurat::Idents(object)))]
-    nearest.point <- RANN::nn2(data=Data[,1:2], query=GetXYCenter(Data)[,1:2], k=1)$nn.idx
+    levels(Data[, "color"]) <- cols[seq_len(length(levels(Seurat::Idents(object))))]
+    nearest.point <- RANN::nn2(data=Data[, c(1,2)], query=GetXYCenter(Data)[, c(1,2)], k=1)$nn.idx
     Data[, "label"] <- NA
     Data[nearest.point, "label"] <- as.vector(GetXYCenter(Data)[, "label"])
     xmin <- min(Data[,1])
@@ -112,12 +112,12 @@ scDimPlot <- function(object=NULL, cols=NULL, pt.size=NULL, reduction=NULL, spli
   plots <- list()
   if (! is.null(x = split.by)){
     if (! split.by %in% colnames(object@meta.data)){
-      stop(paste0("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n"))
+      stop("The parameter 'split.by' ", split.by, " does not exist in MetaData slot!\n")
     }
     Data <- object@meta.data[, c(reduction_ids, "cluster", split.by)]
     Data[, "cluster"] <- factor(Data[, "cluster"], levels=levels(Seurat::Idents(object)))
     Data[, "color"] <- Data[, "cluster"]
-    levels(Data[, "color"]) <- cols[1:length(levels(Seurat::Idents(object)))]
+    levels(Data[, "color"]) <- cols[seq_len(length(levels(Seurat::Idents(object))))]
     xmin <- min(Data[,1])
     xmax <- max(Data[,1])
     ymin <- min(Data[,2])
@@ -130,7 +130,7 @@ scDimPlot <- function(object=NULL, cols=NULL, pt.size=NULL, reduction=NULL, spli
     legend <- gtable::gtable_filter(legend, 'box', trim=F)  # use trim depending on need
     for (s in unique(Data[, split.by])){
       data <- Data[Data[, split.by] == s,]
-      nearest.point <- RANN::nn2(data=data[,1:2], query=GetXYCenter(data)[,1:2], k=1)$nn.idx
+      nearest.point <- RANN::nn2(data=data[, c(1,2)], query=GetXYCenter(data)[, c(1,2)], k=1)$nn.idx
       data[, "label"] <- NA
       data[nearest.point, "label"] <- as.vector(GetXYCenter(data)[, "label"])
       plots[[s]] <- pm(data, title = s, legend_title = NULL)

@@ -21,7 +21,7 @@ scGO <- function(object=NULL, key=NULL, clusters=NULL, logFC = 0.25, only.pos=TR
     stop("Parameter 'key' must be specified!\n")
   }
   if (! key %in% names(object@misc)){
-    stop(paste0("The 'key' ", key, " does not exist!\n"))
+    stop("The 'key' ", key, " does not exist!\n")
   }
   directions <- c("up", "down")
   if (only.pos){
@@ -54,7 +54,7 @@ scGO <- function(object=NULL, key=NULL, clusters=NULL, logFC = 0.25, only.pos=TR
 	names(geneList) <- rownames(object)
 	geneList <- geneList[intersect(names(geneList), names(x))]
 	TotalGenes <- names(geneList)
-	for (ii in 1:length(geneList)){
+	for (ii in seq_len(length(geneList))){
 	  names(geneList)[ii] = x[[names(geneList)[ii]]][1]
 	}
 	go_enrichment_results = list()
@@ -71,7 +71,7 @@ scGO <- function(object=NULL, key=NULL, clusters=NULL, logFC = 0.25, only.pos=TR
 	    go_enrichment_results[[c]][[direction]] = list()
 	    queryGene = rownames(queryMatrix)
 	    if(length(queryGene) < 1){
-	      warning(paste0("No ", direction, "-regulated genes left to perform GO analysis!"))
+	      warning("No ", direction, "-regulated genes left to perform GO analysis!")
 	      next
 	    }
 	    # Run against topGO ####
@@ -79,7 +79,7 @@ scGO <- function(object=NULL, key=NULL, clusters=NULL, logFC = 0.25, only.pos=TR
 	    queryGeneList[which(TotalGenes %in% queryGene)] = 1
 	    # skip if no query gene left
 	    if (all(queryGeneList==0)){
-	      warning(paste0("No ", direction, "-regulated genes left to perform GO analysis!"))
+	      warning("No ", direction, "-regulated genes left to perform GO analysis!")
 	      next
 	    }
 	    tab = list()

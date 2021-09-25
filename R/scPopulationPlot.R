@@ -26,11 +26,11 @@ scPopulationPlot <- function(object=NULL, by=c("sample", "cluster"), order=NULL,
                 "#CC79A7", "#00AFBB", "#E69F00", "#009E73", "#56B4E9", "#F0E442", "#0072B2", "#D55E00", "#CC79A7", "#4477AA",
                 "#EE6677", "#228833", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB")
     }else{
-      warning(paste0("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters! Use ggplot2's default colors instead\n"))
+      warning("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters! Use ggplot2's default colors instead\n")
       cols <- scales::hue_pal()(length(levels(Seurat::Idents(object))))
     }
   }else if (length(levels(Seurat::Idents(object))) > length(cols)){
-    stop(paste0("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters!"))
+    stop("Not enough colours provided for ", length(levels(Seurat::Idents(object))), " clusters!")
   }
   Sample <- Cells <- Cluster <- NULL
   data <- table(Seurat::Idents(object), object$sample)

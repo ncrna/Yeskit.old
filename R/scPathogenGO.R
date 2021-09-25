@@ -21,13 +21,13 @@ scPathogenGO <- function(object=NULL, key=NULL, species=NULL, clusters=NULL, log
     stop("Parameter 'key' must be specified!\n")
   }
   if (! key %in% names(object@misc)){
-    stop(paste0("The 'key' ", key, " does not exist!\n"))
+    stop("The 'key' ", key, " does not exist!\n")
   }
   if (is.null(species)){
     stop("Parameter 'species' must be specified!\n")
   }
   if (! species %in% names(object@misc[[key]])){
-    stop(paste0("The 'species' ", species, " does not exist!\n"))
+    stop("The 'species' ", species, " does not exist!\n")
   }
   if (is.null(clusters)){
     warning("All clusters will be evaluated!\n")
@@ -53,7 +53,7 @@ scPathogenGO <- function(object=NULL, key=NULL, species=NULL, clusters=NULL, log
   names(geneList) <- rownames(object)
   geneList <- geneList[intersect(names(geneList), names(x))]
   TotalGenes <- names(geneList)
-  for (ii in 1:length(geneList)){
+  for (ii in seq_len(length(geneList))){
     names(geneList)[ii] = x[[names(geneList)[ii]]][1]
   }
   go_enrichment_results = list()
@@ -66,7 +66,7 @@ scPathogenGO <- function(object=NULL, key=NULL, species=NULL, clusters=NULL, log
   for (C in clusters){
     DEdata <- subset(Data, cluster==C)
     if (nrow(DEdata) == 0){
-      warning(paste0("No DE genes between species ", species, " pos/neg in cluster-", C))
+      warning("No DE genes between species ", species, " pos/neg in cluster-", C)
       next
     }
     go_enrichment_results[[species]][[C]] = list()
