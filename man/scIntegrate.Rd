@@ -24,7 +24,8 @@ scIntegrate(
 
 \item{res}{Resolution parameter to set. Default res=0.5}
 
-\item{batch.rm}{Remove batch effect with 'seurat' or 'harmony'. Default batch.rm="harmony"}
+\item{batch.rm}{Remove batch effect with 'seurat' or 'harmony'. 
+Default batch.rm='harmony'}
 }
 \value{
 Seurat object.

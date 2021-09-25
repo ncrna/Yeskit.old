@@ -23,9 +23,11 @@ scGO(
 
 \item{logFC}{A positive value to set the cutoff of logFC}
 
-\item{only.pos}{Only up-regulated genes are taken into account, default only.pos=TRUE}
+\item{only.pos}{Only up-regulated genes are taken into account, 
+default only.pos=TRUE}
 
-\item{reference}{Reference organism to set ["human" or "mouse"], default reference = "human"}
+\item{reference}{Reference organism to set ['human' or 'mouse'], 
+default reference = 'human'}
 
 \item{extra}{Extra slot used to fetch DGEs}
 }

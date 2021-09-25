@@ -19,7 +19,8 @@ scDimPlot(
 \arguments{
 \item{object}{Seurat object}
 
-\item{cols}{Colors to plot, use ggplot2's default colors by default. We include a pallete called 'sc' which consists of 36 colors}
+\item{cols}{Colors to plot, use ggplot2's default colors by default. 
+We include a pallete called 'sc' which consists of 36 colors}
 
 \item{pt.size}{Adjust point size to plot, default pt.size=0.5}
 

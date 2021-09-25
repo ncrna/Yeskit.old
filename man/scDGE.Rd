@@ -17,7 +17,7 @@ scDGE(
 \arguments{
 \item{object}{Seurat object.}
 
-\item{comparison}{Vector of nominal variables from group.by. Eg., comparison=c("Normal", "Tumor")}
+\item{comparison}{Vector of nominal variables from group.by. Eg., comparison=c('Normal', 'Tumor')}
 
 \item{group.by}{Regroup cells before performing DGE, default group.by='group'}
 

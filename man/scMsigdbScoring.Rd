@@ -9,9 +9,11 @@ scMsigdbScoring(object = NULL, category = NULL, geneSets = NULL)
 \arguments{
 \item{object}{Seurat object}
 
-\item{category}{String of specific MSigDB category to use, default category='H' stands for "hallmark gene sets"}
+\item{category}{String of specific MSigDB category to use, 
+default category='H' stands for 'hallmark gene sets'}
 
-\item{geneSets}{Vector of gene sets, default geneSets='NULL' stands for all gene sets in category will be used}
+\item{geneSets}{Vector of gene sets, default geneSets='NULL' 
+stands for all gene sets in category will be used}
 }
 \value{
 Seurat object
@@ -20,5 +22,5 @@ Seurat object
 MSigdb signature scoring for single-cell clusters
 }
 \author{
-rstatistics
+Wei Zhang
 }

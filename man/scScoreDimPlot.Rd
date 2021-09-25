@@ -40,9 +40,11 @@ scScoreDimPlot(
 
 \item{scale}{Determine whether to scale the data, default is TRUE}
 
-\item{col.min}{Minimum scaled average score threshold (smaller values will be set to this)}
+\item{col.min}{Minimum scaled average score threshold 
+(smaller values will be set to this)}
 
-\item{col.max}{Maximum scaled average score threshold (larger values will be set to this)}
+\item{col.max}{Maximum scaled average score threshold 
+(larger values will be set to this)}
 }
 \value{
 ggplot2 object

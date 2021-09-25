@@ -41,23 +41,28 @@ default is 2}
 
 \item{percent_mito}{Maximum percent of mito in a cell}
 
-\item{mito_pattern}{regex pattern for mitochondrial genes, default is '^GRCh38_MT-|^mm10___mt-|^MT-|^mt-'}
+\item{mito_pattern}{regex pattern for mitochondrial genes, 
+default is '^GRCh38_MT-|^mm10___mt-|^MT-|^mt-'}
 
 \item{project_name}{Project name for the Seurat object}
 
 \item{group_name}{Group name for the Seurat object}
 
-\item{strip_suffix}{Remove trailing "-1" in cell barcodes}
+\item{strip_suffix}{Remove trailing '-1' in cell barcodes}
 
 \item{meta_file}{Meta file to use}
 
-\item{human.prefix}{The prefix denoting rownames for human cells. Default is "GRCh38_". Just for PDX samples}
+\item{human.prefix}{The prefix denoting rownames for human cells. 
+Default is 'GRCh38_'. Just for PDX samples}
 
-\item{mouse.prefix}{The prefix denoting rownames for mouse cells. Default is "mm10___". Just for PDX samples}
+\item{mouse.prefix}{The prefix denoting rownames for mouse cells. 
+Default is 'mm10___'. Just for PDX samples}
 
-\item{organism.thres}{Threshould fraction of reads to separate organism and background, Default is 0.9. Just for PDX samples}
+\item{organism.thres}{Threshould fraction of reads to separate organism 
+and background, Default is 0.9. Just for PDX samples}
 
-\item{organism.use}{Which organism is used. Default is NULL, means all organisms will be used. Just for PDX samples}
+\item{organism.use}{Which organism is used. Default is NULL, 
+means all organisms will be used. Just for PDX samples}
 
 \item{meta_features}{Features used to store in the meta.data slot}
 }

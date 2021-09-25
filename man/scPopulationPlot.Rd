@@ -14,11 +14,13 @@ scPopulationPlot(
 \arguments{
 \item{object}{Seurat object}
 
-\item{by}{String used to separate cluster/sample, only "cluster" or "sample" is accepted}
+\item{by}{String used to separate cluster/sample, 
+only 'cluster' or 'sample' is accepted}
 
 \item{order}{A vector to set the order of samples}
 
-\item{cols}{Vector of colors, each color corresponds to an identity class. Use ggplot2's default colors by default.
+\item{cols}{Vector of colors, each color corresponds to an identity class. 
+  Use ggplot2's default colors by default.
 We include a pallete called 'sc' which consists of 36 colors}
 }
 \value{

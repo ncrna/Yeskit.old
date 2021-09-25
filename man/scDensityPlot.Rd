@@ -17,7 +17,7 @@ scDensityPlot(
 \arguments{
 \item{object}{Seurat object}
 
-\item{reduction}{Dimensional reduction to use, default reduction="umap"}
+\item{reduction}{Dimensional reduction to use, default reduction='umap'}
 
 \item{title}{Figure title}
 
@@ -27,7 +27,8 @@ scDensityPlot(
 
 \item{colors}{Vector of colours to use for n-colour gradient}
 
-\item{digits}{Integer representing the number of decimal places reserved for the legend, default digits=3}
+\item{digits}{Integer representing the number of decimal places reserved for
+the legend, default digits=3}
 }
 \value{
 ggplot object

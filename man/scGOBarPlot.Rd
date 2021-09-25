@@ -21,9 +21,9 @@ scGOBarPlot(
 
 \item{cluster}{Cluster to presentation}
 
-\item{direction}{Regulation direction to use, only "up" or "down"}
+\item{direction}{Regulation direction to use, only 'up' or 'down'}
 
-\item{ont}{Ontology to use, only "BP", "CC", or "MF"}
+\item{ont}{Ontology to use, only 'BP', 'CC', or 'MF'}
 
 \item{top_n}{Only top_n entries to plot}
 

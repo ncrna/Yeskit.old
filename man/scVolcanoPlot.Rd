@@ -31,7 +31,8 @@ scVolcanoPlot(
 
 \item{logFC}{Log2FoldChange in DGEs}
 
-\item{cols}{Colours to pain the dots, default cols=c("#808080", "#810F7C", "#006D2C", "#000000")}
+\item{cols}{Colours to pain the dots, 
+default cols=c('#808080', '#810F7C', '#006D2C', '#000000')}
 
 \item{pt.size}{Size of the dots, default pt.size=1}
 

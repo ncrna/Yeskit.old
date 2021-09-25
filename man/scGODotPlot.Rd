@@ -23,17 +23,19 @@ scGODotPlot(
 
 \item{key}{The keyword that is stored in object@misc$key}
 
-\item{clusters}{Vectors of clusters to display, default clusters=NULL means all clusters}
+\item{clusters}{Vectors of clusters to display, default clusters=NULL 
+means all clusters}
 
-\item{direction}{Regulation direction to use, only "up" or "down" is allowed}
+\item{direction}{Regulation direction to use, only 'up' or 'down' is allowed}
 
-\item{ont}{Ontology to use, only "BP", "CC", or "MF" is allowed}
+\item{ont}{Ontology to use, only 'BP', 'CC', or 'MF' is allowed}
 
 \item{padj.cutoff}{The cutoff of adjusted Pvalue, default padj.cutoff=0.01}
 
-\item{order.genes}{Order GO results by the number of significant genes, default is FALSE}
+\item{order.genes}{Order GO results by the number of significant genes, 
+default is FALSE}
 
-\item{colors}{Colors to specify, default cols = c("white", "red")}
+\item{colors}{Colors to specify, default cols = c('white', 'red')}
 
 \item{font.size}{Font size of axis}
 
