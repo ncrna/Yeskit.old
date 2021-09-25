@@ -2,7 +2,8 @@ Package: Yeskit
 Type: Package
 Title: Yet Another Single-Cell Analysis Toolkit (Yeskit)
 Version: 0.99.0
-Authors@R: c(person(given = "Wei", family = "Zhang", email = "admin@ncrna.net", role = c("cre", "aut"))
+Date: 2021-09-25
+Authors@R: person(given = "Wei", family = "Zhang", role = c("cre", "aut"), email = "admin@ncrna.net")
 Description: This is a single-cell analysis tookit. It can be used for single-cell gene expression matrices importation, 
     data integration, differential analysis, functional analysis, and visualization. It obeys the default data structure 
     of Seurat, and stores pathogen expression data and pathway enrichment scores in the obj@metadata slot and stores 
@@ -43,3 +44,5 @@ VignetteBuilder: knitr
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.1.1
+BugReports: https://github.com/ncrna/Yeskit/issues
+git_url: https://github.com/ncrna/Yeskit
