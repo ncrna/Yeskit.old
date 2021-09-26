@@ -4,9 +4,6 @@ title: "Decoding Intracellular Pathogen of H3N2 at the Single-Cell level using Y
 author: "Wei Zhang"
 date: "2021/09/10"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '4'
   html_document:
     toc: yes
     toc_depth: 4
@@ -15,11 +12,15 @@ output:
     highlight: tango
     number_sections: yes
     df_print: tibble
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+    fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{Tutorial}
-  %\VignetteEngine{knitr::rmarkdown}
   %\usepackage[UTF-8]{inputenc}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r, echo=FALSE}
@@ -36,8 +37,8 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 if (!requireNamespace("devtools", quietly = TRUE))
     BiocManager::install("devtools")
-#if (requireNamespace("Yeskit", quietly = TRUE))
-#    devtools::install_github("ncrna/Yeskit")
+if (requireNamespace("Yeskit", quietly = TRUE))
+    devtools::install_github("ncrna/Yeskit")
 ```
 
 # Import Yeskit
@@ -49,7 +50,7 @@ library(topGO)
 
 # Importation
 Now, let's load the single-cell count matrix:
-```{r import, fig.width=4, fig.height=4}
+```{r import_bystander, fig.width=5, fig.height=5, fig.align="center", fig.cap="Quality control for bystander"}
 Bystander <- scRead(sample_name = "Bystander", 
                     data_dir = system.file("extdata/H3N2_10X_matrix/Bystander/", 
                                            package="Yeskit"), 
@@ -57,6 +58,9 @@ Bystander <- scRead(sample_name = "Bystander",
                     meta_file = system.file("extdata/H3N2_10X_matrix/Bystander/microbes.tsv", 
                                             package="Yeskit")
                     )
+```
+
+```{r import_infected, fig.width=5, fig.height=5, fig.align="center", fig.cap="Quality control for bystander"}
 Infected <- scRead(sample_name = "Infected", 
                    data_dir = system.file("extdata/H3N2_10X_matrix/Infected/", 
                                           package="Yeskit"), 
@@ -67,7 +71,7 @@ Infected <- scRead(sample_name = "Infected",
 
 # Integration
 Then, we integrate these two `Seurat` object
-```{r integration, message=FALSE, warning=FALSE}
+```{r integration, message=FALSE, warning=FALSE, fig.align="center", fig.cap="Harmony Interation"}
 H3N2_integrated <- scIntegrate(object.list=list(Bystander, Infected), 
                                object.names = c("Bystander", "Infected"), 
                                batch.rm = "harmony", res = 0.7)
@@ -127,7 +131,7 @@ H3N2_integrated <- scMsigdbScoring(object = H3N2_integrated, category = "H", gen
 
 # Visualization
 ## Visualization of cell clusters by scDimPlot
-```{r, fig.height=3, fig.width=8, fig.align="center", fig.cap="Cell DimPlot"}
+```{r DimPlot, fig.height=3, fig.width=8, fig.align="center", fig.cap="Cell DimPlot"}
 scDimPlot(object = H3N2_integrated, 
           reduction = "umap", 
           cols = NULL, 
@@ -137,7 +141,7 @@ scDimPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of cell densities by scDensityPlot
-```{r, fig.height=3, fig.width=8, fig.align="center", fig.cap="Cell Density Plot"}
+```{r DensityPlot, fig.height=3, fig.width=8, fig.align="center", fig.cap="Cell Density Plot"}
 scDensityPlot(object = H3N2_integrated, 
               reduction = "umap", 
               split.by = "sample", 
@@ -145,7 +149,7 @@ scDensityPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of cell population fractions by scPopulationPlot, the x axis stands for clusters
-```{r, fig.height=1, fig.width=1.5, fig.align="center", fig.cap="Cell Population Plot by cluster"}
+```{r PopulationPlot1, fig.height=3, fig.width=3, fig.align="center", fig.cap="Cell Population Plot by cluster"}
 scPopulationPlot(object = H3N2_integrated, 
                  by = "cluster", 
                  cols = "sc", 
@@ -153,14 +157,14 @@ scPopulationPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of cell population fractions by scPopulationPlot, the x axis stands for samples
-```{r, fig.height=1, fig.width=1.5, fig.align="center", fig.cap="Cell Population Plot by sample"}
+```{r PopulationPlot2, fig.height=3, fig.width=3, fig.align="center", fig.cap="Cell Population Plot by sample"}
 scPopulationPlot(object = H3N2_integrated, 
                  by = "sample", 
                  order = c("Bystander", "Infected"))
 ```
 
 ## Visualization of meta data by scVizMeta
-```{r, fig.height=2, fig.width=5, fig.align="center", fig.cap="H3N2 DimPlot"}
+```{r VizMetaPlot, fig.height=3.3, fig.width=10, fig.align="center", fig.cap="H3N2 DimPlot"}
 scVizMeta(object = H3N2_integrated, 
           reduction = "umap", 
           signature="H3N2", 
@@ -179,7 +183,7 @@ scVizMeta(object = H3N2_integrated,
 ```
 
 ## Visualization of H3N2-infected cell fractions by scPathogenRatioPlot
-```{r fig.height=1.5, fig.width=2.5, fig.align="center", fig.cap="H3N2 Ratio Plot"}
+```{r PathogenRatioPlot, fig.height=3, fig.width=4, fig.align="center", fig.cap="H3N2 Ratio Plot"}
 scPathogenRatioPlot(object = H3N2_integrated, 
                     species = "H3N2", 
                     split.by = "sample", 
@@ -187,7 +191,7 @@ scPathogenRatioPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of DGEs by scVolcanoPlot
-```{r, fig.height=2, fig.width=2, fig.align="center", fig.cap="Volcano Plot of Infected_vs_Bystander"}
+```{r VolcanoPlot, fig.height=4, fig.width=4, fig.align="center", fig.cap="Volcano Plot of Infected_vs_Bystander"}
 scVolcanoPlot(H3N2_integrated, 
               key = "Infected_vs_Bystander", 
               cluster = "0", 
@@ -195,7 +199,7 @@ scVolcanoPlot(H3N2_integrated,
 ```
 
 ## Visualization of enriched GO terms for up-regulated genes by scGOBarPlot
-```{r, fig.height=1.5, fig.width=3, fig.align="center", fig.cap="Infected_vs_Bystander.GO_up"}
+```{r GOBarPlot_up, fig.height=3, fig.width=6, fig.align="center", fig.cap="Infected_vs_Bystander.GO_up"}
 scGOBarPlot(object = H3N2_integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
@@ -205,7 +209,7 @@ scGOBarPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of enriched GO terms for down-regulated genes by scGOBarPlot
-```{r, fig.height=1.5, fig.width=3, fig.align="center", fig.cap="Infected_vs_Bystander.GO_down"}
+```{r GOBarPlot_down, fig.height=3, fig.width=6, fig.align="center", fig.cap="Infected_vs_Bystander.GO_down"}
 scGOBarPlot(object = H3N2_integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
@@ -215,7 +219,7 @@ scGOBarPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of enriched GO terms for up-regulated genes by scGODotPlot
-```{r, fig.height=2, fig.width=3, fig.align="center", fig.cap="Infected_vs_Bystander.GO_up"}
+```{r GODotPlot_up, fig.height=4, fig.width=7, fig.align="center", fig.cap="Infected_vs_Bystander.GO_up"}
 scGODotPlot(object = H3N2_integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
@@ -225,7 +229,7 @@ scGODotPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of enriched GO terms for down-regulated genes by scGODotPlot
-```{r, fig.height=2, fig.width=2.9, fig.align="center", fig.cap="Infected_vs_Bystander.GO_down"}
+```{r GODotPlot_down, fig.height=4, fig.width=7, fig.align="center", fig.cap="Infected_vs_Bystander.GO_down"}
 scGODotPlot(object = H3N2_integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
@@ -236,7 +240,7 @@ scGODotPlot(object = H3N2_integrated,
 ```
 
 ## Visualization of HALLMARK_INFLAMMATORY_RESPONSE pathway
-```{r, fig.height=2, fig.width=5, fig.align="center", fig.cap = "HALLMARK_INFLAMMATORY_RESPONSE"}
+```{r INFLAMMATORY_RESPONSE, fig.height=3, fig.width=9, fig.align="center", fig.cap = "HALLMARK_INFLAMMATORY_RESPONSE"}
 scScoreDimPlot(H3N2_integrated, 
                signature = "HALLMARK_INFLAMMATORY_RESPONSE", 
                split.by="sample", 
@@ -245,7 +249,7 @@ scScoreDimPlot(H3N2_integrated,
 ```
 
 ## Visualization of HALLMARK_TNFA_SIGNALING_VIA_NFKB pathway
-```{r, fig.height=2, fig.width=5, fig.align="center", fig.cap = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"}
+```{r TNFA_SIGNALING_VIA_NFKB, fig.height=3, fig.width=9, fig.align="center", fig.cap = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"}
 scScoreDimPlot(H3N2_integrated, 
                signature = "HALLMARK_TNFA_SIGNALING_VIA_NFKB", 
                split.by="sample", 
@@ -254,7 +258,7 @@ scScoreDimPlot(H3N2_integrated,
 ```
 
 ## Visualization of HALLMARK_APOPTOSIS pathway
-```{r, fig.height=2, fig.width=5, fig.align="center", fig.cap = "HALLMARK_APOPTOSIS"}
+```{r APOPTOSIS, fig.height=3, fig.width=9, fig.align="center", fig.cap = "HALLMARK_APOPTOSIS"}
 scScoreDimPlot(H3N2_integrated, 
                signature = "HALLMARK_APOPTOSIS", 
                split.by="sample", 
