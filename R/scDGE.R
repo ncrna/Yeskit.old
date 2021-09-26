@@ -11,6 +11,18 @@
 #'
 #' @author rstatistics
 #' @export
+#'
+#' @examples
+#' data("H3N2_small")
+#' x <- scDGE(object = H3N2_small, 
+#'   comparison = c("Infected", "Bystander"),
+#'   group.by = "group", 
+#'   min.cells = 10, 
+#'   logFC = 0.25, 
+#'   clusters = NULL
+#' )
+#' head(x)
+#'
 scDGE <- function(object = object, comparison = c("condA", "condB"), 
                   group.by = NULL, min.cells = 20, logFC = 0.25, 
                   clusters = NULL) {

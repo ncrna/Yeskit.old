@@ -72,14 +72,14 @@ Infected <- scRead(sample_name = "Infected",
 # Integration
 Then, we integrate these two `Seurat` object
 ```{r integration, message=FALSE, warning=FALSE, fig.align="center", fig.cap="Harmony Interation"}
-H3N2_integrated <- scIntegrate(object.list=list(Bystander, Infected), 
+Integrated <- scIntegrate(object.list=list(Bystander, Infected), 
                                object.names = c("Bystander", "Infected"), 
                                batch.rm = "harmony", res = 0.7)
 ```
 
 # FindMarkers
 ```{r cellmarkers, message=FALSE, warning=FALSE}
-slot(H3N2_integrated, "misc")$Markers <- Seurat::FindAllMarkers(object = H3N2_integrated,
+slot(Integrated, "misc")$Markers <- Seurat::FindAllMarkers(object = Integrated,
                                                                 assay = 'RNA', 
                                                                 test.use = 'MAST')
 ```
@@ -87,7 +87,7 @@ slot(H3N2_integrated, "misc")$Markers <- Seurat::FindAllMarkers(object = H3N2_in
 # Differential analysis
 ## Differential analysis between Infected and Bystander
 ```{r dge_of_infected_vs_bystander, message=FALSE, warning=FALSE}
-slot(H3N2_integrated, "misc")$Infected_vs_Bystander <- scDGE(object = H3N2_integrated, 
+slot(Integrated, "misc")$Infected_vs_Bystander <- scDGE(object = Integrated, 
                                                              comparison = c("Infected", "Bystander"), 
                                                              group.by = "group", min.cells = 10, 
                                                              logFC = 0.25, clusters = NULL)
@@ -95,14 +95,14 @@ slot(H3N2_integrated, "misc")$Infected_vs_Bystander <- scDGE(object = H3N2_integ
 
 ## Differential analysis between H3N2_positive and H3N2_negative 
 ```{r dge_of_H3N2pos_vs_H3N2neg, message=FALSE, warning=FALSE}
-slot(H3N2_integrated, "misc")$H3N2 <- scPathogenDGE(object = H3N2_integrated, 
+slot(Integrated, "misc")$H3N2 <- scPathogenDGE(object = Integrated, 
                                                     species.by = "H3N2", min.cells = 5)
 ```
 
 # GO annotation
 ## GO annotation of Markers
 ```{r go_of_cellmarkers, message=FALSE, warning=FALSE}
-slot(H3N2_integrated, "misc")$Markers.GO <- scGO(object = H3N2_integrated, 
+slot(Integrated, "misc")$Markers.GO <- scGO(object = Integrated, 
                                                  key = "Markers", 
                                                  logFC = 0.25, 
                                                  only.pos = TRUE, 
@@ -111,7 +111,7 @@ slot(H3N2_integrated, "misc")$Markers.GO <- scGO(object = H3N2_integrated,
 
 ## GO annotation of DGEs between Infected and Bystander
 ```{r go_of_infected_vs_bystander, message=FALSE, warning=FALSE}
-slot(H3N2_integrated, "misc")$Infected_vs_Bystander.GO <- scGO(object = H3N2_integrated, 
+slot(Integrated, "misc")$Infected_vs_Bystander.GO <- scGO(object = Integrated, 
                                                                key = "Infected_vs_Bystander", 
                                                                logFC = 0.25, only.pos = FALSE,
                                                                reference = "human")
@@ -119,20 +119,25 @@ slot(H3N2_integrated, "misc")$Infected_vs_Bystander.GO <- scGO(object = H3N2_int
 
 ## GO annotation of DGEs between H3N2_positive and H3N2_negative 
 ```{r go_of_H3N2pos_vs_H3N2neg, message=FALSE, warning=FALSE}
-slot(H3N2_integrated, "misc")$H3N2.GO <- scPathogenGO(object = H3N2_integrated, key = "H3N2", 
+slot(Integrated, "misc")$H3N2.GO <- scPathogenGO(object = Integrated, key = "H3N2", 
                                                       clusters = NULL, species = "H3N2", 
                                                       logFC = 0.25)
 ```
 
 # MSigDB scoring
 ```{r msigdb_score, message=FALSE, warning=FALSE}
-H3N2_integrated <- scMsigdbScoring(object = H3N2_integrated, category = "H", geneSets = NULL)
+Integrated <- scMsigdbScoring(object = Integrated, 
+                                   category = "H", 
+                                   geneSets = c("HALLMARK_INFLAMMATORY_RESPONSE", 
+                                                "HALLMARK_TNFA_SIGNALING_VIA_NFKB", 
+                                                "HALLMARK_APOPTOSIS")
+                                   )
 ```
 
 # Visualization
 ## Visualization of cell clusters by scDimPlot
 ```{r DimPlot, fig.height=3, fig.width=8, fig.align="center", fig.cap="Cell DimPlot"}
-scDimPlot(object = H3N2_integrated, 
+scDimPlot(object = Integrated, 
           reduction = "umap", 
           cols = NULL, 
           split.by = "sample", 
@@ -142,7 +147,7 @@ scDimPlot(object = H3N2_integrated,
 
 ## Visualization of cell densities by scDensityPlot
 ```{r DensityPlot, fig.height=3, fig.width=8, fig.align="center", fig.cap="Cell Density Plot"}
-scDensityPlot(object = H3N2_integrated, 
+scDensityPlot(object = Integrated, 
               reduction = "umap", 
               split.by = "sample", 
               ncol = 2)
@@ -150,7 +155,7 @@ scDensityPlot(object = H3N2_integrated,
 
 ## Visualization of cell population fractions by scPopulationPlot, the x axis stands for clusters
 ```{r PopulationPlot1, fig.height=3, fig.width=3, fig.align="center", fig.cap="Cell Population Plot by cluster"}
-scPopulationPlot(object = H3N2_integrated, 
+scPopulationPlot(object = Integrated, 
                  by = "cluster", 
                  cols = "sc", 
                  order = c("Bystander", "Infected"))
@@ -158,14 +163,14 @@ scPopulationPlot(object = H3N2_integrated,
 
 ## Visualization of cell population fractions by scPopulationPlot, the x axis stands for samples
 ```{r PopulationPlot2, fig.height=3, fig.width=3, fig.align="center", fig.cap="Cell Population Plot by sample"}
-scPopulationPlot(object = H3N2_integrated, 
+scPopulationPlot(object = Integrated, 
                  by = "sample", 
                  order = c("Bystander", "Infected"))
 ```
 
 ## Visualization of meta data by scVizMeta
 ```{r VizMetaPlot, fig.height=3.3, fig.width=10, fig.align="center", fig.cap="H3N2 DimPlot"}
-scVizMeta(object = H3N2_integrated, 
+scVizMeta(object = Integrated, 
           reduction = "umap", 
           signature="H3N2", 
           title = "H3N2", 
@@ -184,7 +189,7 @@ scVizMeta(object = H3N2_integrated,
 
 ## Visualization of H3N2-infected cell fractions by scPathogenRatioPlot
 ```{r PathogenRatioPlot, fig.height=3, fig.width=4, fig.align="center", fig.cap="H3N2 Ratio Plot"}
-scPathogenRatioPlot(object = H3N2_integrated, 
+scPathogenRatioPlot(object = Integrated, 
                     species = "H3N2", 
                     split.by = "sample", 
                     ncol = 2)
@@ -192,7 +197,7 @@ scPathogenRatioPlot(object = H3N2_integrated,
 
 ## Visualization of DGEs by scVolcanoPlot
 ```{r VolcanoPlot, fig.height=4, fig.width=4, fig.align="center", fig.cap="Volcano Plot of Infected_vs_Bystander"}
-scVolcanoPlot(H3N2_integrated, 
+scVolcanoPlot(Integrated, 
               key = "Infected_vs_Bystander", 
               cluster = "0", 
               top_n = 10)
@@ -200,7 +205,7 @@ scVolcanoPlot(H3N2_integrated,
 
 ## Visualization of enriched GO terms for up-regulated genes by scGOBarPlot
 ```{r GOBarPlot_up, fig.height=3, fig.width=6, fig.align="center", fig.cap="Infected_vs_Bystander.GO_up"}
-scGOBarPlot(object = H3N2_integrated, 
+scGOBarPlot(object = Integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
             top_n = 6, 
@@ -210,7 +215,7 @@ scGOBarPlot(object = H3N2_integrated,
 
 ## Visualization of enriched GO terms for down-regulated genes by scGOBarPlot
 ```{r GOBarPlot_down, fig.height=3, fig.width=6, fig.align="center", fig.cap="Infected_vs_Bystander.GO_down"}
-scGOBarPlot(object = H3N2_integrated, 
+scGOBarPlot(object = Integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
             top_n = 6, 
@@ -220,7 +225,7 @@ scGOBarPlot(object = H3N2_integrated,
 
 ## Visualization of enriched GO terms for up-regulated genes by scGODotPlot
 ```{r GODotPlot_up, fig.height=4, fig.width=7, fig.align="center", fig.cap="Infected_vs_Bystander.GO_up"}
-scGODotPlot(object = H3N2_integrated, 
+scGODotPlot(object = Integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
             direction = "up", 
@@ -230,7 +235,7 @@ scGODotPlot(object = H3N2_integrated,
 
 ## Visualization of enriched GO terms for down-regulated genes by scGODotPlot
 ```{r GODotPlot_down, fig.height=4, fig.width=7, fig.align="center", fig.cap="Infected_vs_Bystander.GO_down"}
-scGODotPlot(object = H3N2_integrated, 
+scGODotPlot(object = Integrated, 
             key = "Infected_vs_Bystander.GO", 
             ont = "BP", 
             direction = "down", 
@@ -239,9 +244,20 @@ scGODotPlot(object = H3N2_integrated,
             font.size = 8)
 ```
 
+
+## BarPlot shows enriched GO terms for up-regulated genes of H3N2pos_vs_H3N2neg
+```{r GOBarPlot_H3N2_up, fig.height=4, fig.width=7, fig.align="center", fig.cap="H3N2pos_vs_H3N2neg.GO_up"}
+scGOBarPlot(Integrated, key = "H3N2.GO", cluster = "0", extra = "H3N2", top_n = 6)
+```
+
+## DotPlot shows enriched GO terms for up-regulated genes of H3N2pos_vs_H3N2neg
+```{r GODotPlot_H3N2_up, fig.height=4, fig.width=7, fig.align="center", fig.cap="H3N2pos_vs_H3N2neg.GO_up"}
+scGODotPlot(Integrated, key = "H3N2.GO", clusters = "0", extra = "H3N2", top_n = 6)
+```
+
 ## Visualization of HALLMARK_INFLAMMATORY_RESPONSE pathway
 ```{r INFLAMMATORY_RESPONSE, fig.height=3, fig.width=9, fig.align="center", fig.cap = "HALLMARK_INFLAMMATORY_RESPONSE"}
-scScoreDimPlot(H3N2_integrated, 
+scScoreDimPlot(Integrated, 
                signature = "HALLMARK_INFLAMMATORY_RESPONSE", 
                split.by="sample", 
                ncol = 2, 
@@ -250,7 +266,7 @@ scScoreDimPlot(H3N2_integrated,
 
 ## Visualization of HALLMARK_TNFA_SIGNALING_VIA_NFKB pathway
 ```{r TNFA_SIGNALING_VIA_NFKB, fig.height=3, fig.width=9, fig.align="center", fig.cap = "HALLMARK_TNFA_SIGNALING_VIA_NFKB"}
-scScoreDimPlot(H3N2_integrated, 
+scScoreDimPlot(Integrated, 
                signature = "HALLMARK_TNFA_SIGNALING_VIA_NFKB", 
                split.by="sample", 
                ncol = 2, 
@@ -259,7 +275,7 @@ scScoreDimPlot(H3N2_integrated,
 
 ## Visualization of HALLMARK_APOPTOSIS pathway
 ```{r APOPTOSIS, fig.height=3, fig.width=9, fig.align="center", fig.cap = "HALLMARK_APOPTOSIS"}
-scScoreDimPlot(H3N2_integrated, 
+scScoreDimPlot(Integrated, 
                signature = "HALLMARK_APOPTOSIS", 
                split.by="sample", 
                ncol = 2, 
